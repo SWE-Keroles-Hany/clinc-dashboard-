@@ -1,23 +1,20 @@
-import 'package:clinc_dashboard/features/auth/presentation/screens/signup_screen.dart';
+import 'package:clinc_dashboard/core/theme/color_manger.dart';
+import 'package:clinc_dashboard/features/auth/presentation/widgets/login_body.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
+  static const String routeName = "LoginScreen";
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      body: Center(
-        child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SignupScreen()),
-            );
-          },
-          child: Text('Login Screen'),
-        ),
-      ),
+      backgroundColor: ColorManager.white,
+      body: LoginBody(width: width),
     );
   }
 }
+
+
+

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData theme = ThemeData(
-    appBarTheme: AppBarTheme(backgroundColor: ColorManager.backGroundColor),
+    appBarTheme: AppBarTheme(backgroundColor: ColorManager.white),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.transparent,
     ),
 
-    scaffoldBackgroundColor: ColorManager.backGroundColor,
+    scaffoldBackgroundColor: ColorManager.white,
   );
 }
