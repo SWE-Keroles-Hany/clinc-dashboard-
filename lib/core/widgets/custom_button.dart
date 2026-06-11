@@ -20,7 +20,6 @@ class CustomButton extends StatelessWidget {
   final double width;
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         fixedSize: Size(width, 55),

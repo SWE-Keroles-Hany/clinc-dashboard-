@@ -69,7 +69,7 @@ class UiUtils {
               backgroundColor: Colors.transparent,
               content: Center(
                 child: CircularProgressIndicator(
-                  color: ColorManager.aquaMint,
+                  color: ColorManager.primary,
 
                   // value: 5,
                 ),

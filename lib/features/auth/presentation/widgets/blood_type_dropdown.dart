@@ -1,3 +1,4 @@
+import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -22,7 +23,15 @@ class CustomDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return FormField<String>(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label!,
+          style: AppTextStyles.s18bold.copyWith(color: ColorManager.black),
+        ),
+        FormField<String>(
+      
       key: ValueKey(value),
       initialValue: value,
       validator:
@@ -35,31 +44,33 @@ class CustomDropDown extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DropdownMenu<String>(
-              width: 250.w,
+            
+                DropdownMenu<String>(       
+                  hintText: "Male",
+                  width: 250.w,
               initialSelection: fieldState.value,
-              textStyle: textTheme.titleMedium!.copyWith(
-                color: ColorManager.white,
-              ),
-              label: Text(
-                label ?? "",
-                style: textTheme.titleMedium!.copyWith(
-                  color: ColorManager.mediumGray,
-                ),
-              ),
+                  textStyle: AppTextStyles.s14bold,
+            
               inputDecorationTheme: InputDecorationTheme(
+
+                
+                    enabledBorder: border(ColorManager.black),
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 25.h,
+                      horizontal: 10.w,
+                    ),
                 filled: true,
-                fillColor: ColorManager.darkTealGreen,
-                border: border(Colors.grey),
-                enabledBorder: border(Colors.grey),
-                focusedBorder: border(ColorManager.aquaMint),
+                    fillColor: ColorManager.lightGray,
+                    border: InputBorder.none,
               ),
               menuStyle: MenuStyle(
-                backgroundColor: WidgetStatePropertyAll(ColorManager.white),
+                    backgroundColor: WidgetStatePropertyAll(
+                      ColorManager.lightGray,
+                    ),
               ),
               trailingIcon: const Icon(
                 Icons.arrow_drop_down,
-                color: ColorManager.white,
+                    color: ColorManager.black,
               ),
               dropdownMenuEntries: items
                   .map(
@@ -86,13 +97,15 @@ class CustomDropDown extends StatelessWidget {
           ],
         );
       },
+        ),
+      ],
     );
   }
 
   OutlineInputBorder border(Color color) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
-      borderSide: BorderSide(color: color, width: 1.5),
+      borderSide: BorderSide(color: Colors.transparent, width: 0),
     );
   }
 }

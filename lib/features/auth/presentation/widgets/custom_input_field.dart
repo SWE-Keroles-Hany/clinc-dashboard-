@@ -82,7 +82,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
 
       
         filled: true,
-        fillColor: Color(0xffF2F4F6),
+            fillColor: ColorManager.lightGray,
         border: border(),
         focusedBorder: focusedBorder(),
         enabled: true,

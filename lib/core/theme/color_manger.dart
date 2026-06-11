@@ -8,7 +8,7 @@ class ColorManager {
   static const yellow = Colors.yellow;
   static const red = Colors.red;
   static const Color kGray500 = Color(0xff6B7280);
-  
+  static const Color lightGray = Color(0xffF2F4F6);
 
 
   

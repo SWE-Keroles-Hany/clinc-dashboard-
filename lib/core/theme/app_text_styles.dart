@@ -17,4 +17,9 @@ class AppTextStyles {
     fontSize: 18,
     fontWeight: FontWeight.w600,
   );
+  static TextStyle get s14bold => const TextStyle(
+    color: ColorManager.black,
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+  );
 }
