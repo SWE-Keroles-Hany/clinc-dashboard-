@@ -1,6 +1,8 @@
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
+import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_cubit_provider.dart';
 import 'package:clinc_dashboard/features/auth/presentation/widgets/login_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName = "LoginScreen";
@@ -9,12 +11,12 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    return Scaffold(
-      backgroundColor: ColorManager.white,
-      body: LoginBody(width: width),
+    return BlocProvider(
+      create: (_) => createAuthCubit(),
+      child: Scaffold(
+        backgroundColor: ColorManager.white,
+        body: LoginBody(width: width),
+      ),
     );
   }
 }
-
-
-

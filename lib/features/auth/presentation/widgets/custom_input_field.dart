@@ -14,7 +14,9 @@ class CustomInputField extends StatefulWidget {
     required this.title,
     required this.controller,
     required this.validator,
-    this.maxLines = 1, required this.hintText, required this.icon,
+    this.maxLines = 1,
+    required this.hintText,
+    required this.icon,
   });
   final TextEditingController controller;
   final bool isPasswordField;
@@ -22,7 +24,7 @@ class CustomInputField extends StatefulWidget {
 
   final String title;
   final String hintText;
-  final IconData icon ; 
+  final IconData icon;
 
   final String? Function(String?)? validator;
   final int maxLines;
@@ -39,58 +41,58 @@ class _CustomInputFieldState extends State<CustomInputField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-      Text(widget.title , style: AppTextStyles.s18bold , )  ,
-      SizedBox(height: 3.h,),
-      TextFormField(
-      onTap: () => pickDate(context, widget.isTabedEnabed),
-      keyboardType: widget.keyboardType,
-      
-      canRequestFocus: true,
-      maxLines: widget.maxLines,
-      focusNode: FocusNode(descendantsAreTraversable: true),
-      style: TextStyle(
-        
-        color: ColorManager.kGray500),
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: widget.validator,
-      controller: widget.controller,
-      obscureText: showPassword,
-      decoration: InputDecoration(
-        
-        prefixIcon: Icon(widget.icon ,color: ColorManager.kGray500,),
-        hintText: widget.hintText,
-        hintStyle: TextStyle(color: ColorManager.kGray500),
-        contentPadding: EdgeInsets.symmetric(vertical:25.h , horizontal: 10.w ),
-        errorStyle: textTheme.labelMedium!.copyWith(
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w500,
-          color: ColorManager.red,
-        ),
-        suffixIcon: widget.isPasswordField
-            ? IconButton(
-                icon: Icon(
-                  showPassword ? Icons.visibility_off : Icons.visibility,
-                  color: ColorManager.primary,
-                ),
-                onPressed: () {
-                  setState(() {
-                    showPassword = !showPassword;
-                  });
-                },
-              )
-            : null,
+        Text(widget.title, style: AppTextStyles.s18bold),
+        SizedBox(height: 3.h),
+        TextFormField(
+          onTap: () => pickDate(context, widget.isTabedEnabed),
+          keyboardType: widget.keyboardType,
 
-      
-        filled: true,
+          canRequestFocus: true,
+          maxLines: widget.maxLines,
+          focusNode: FocusNode(descendantsAreTraversable: true),
+          style: TextStyle(color: ColorManager.kGray500),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: widget.validator,
+          controller: widget.controller,
+          obscureText: showPassword,
+          decoration: InputDecoration(
+            prefixIcon: Icon(widget.icon, color: ColorManager.kGray500),
+            hintText: widget.hintText,
+            hintStyle: TextStyle(color: ColorManager.kGray500),
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 20.h,
+              horizontal: 10.w,
+            ),
+            errorStyle: textTheme.labelMedium!.copyWith(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w500,
+              color: ColorManager.red,
+            ),
+            suffixIcon: widget.isPasswordField
+                ? IconButton(
+                    icon: Icon(
+                      showPassword ? Icons.visibility_off : Icons.visibility,
+                      color: ColorManager.primary,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                  )
+                : null,
+
+            filled: true,
             fillColor: ColorManager.lightGray,
-        border: border(),
-        focusedBorder: focusedBorder(),
-        enabled: true,
-        enabledBorder: border(),
-        errorBorder: errorBorder(),
-      ),
-    )
-    ],);
+            border: border(),
+            focusedBorder: focusedBorder(),
+            enabled: true,
+            enabledBorder: border(),
+            errorBorder: errorBorder(),
+          ),
+        ),
+      ],
+    );
   }
 
   OutlineInputBorder border() {

@@ -2,7 +2,6 @@ import 'package:clinc_dashboard/features/auth/presentation/screens/signup_screen
 import 'package:flutter/material.dart';
 
 import 'core/routes/app_routes.dart';
-import 'features/auth/presentation/screens/login_screen.dart';
 
 void main() {
   runApp(const ClincDashboard());
