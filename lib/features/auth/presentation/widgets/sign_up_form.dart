@@ -209,10 +209,10 @@ class _SignUpFormState extends State<SignUpForm> {
                               gender: selectedGender ?? 'Male',
                               phoneNumber: phoneNumberController.text.trim(),
                               specialty: specialtyController.text.trim(),
-                              yearsOfExperience: null,
-                              clinicAddress: null,
-                              bio: null,
-                              profilePictureUrl: null,
+                              yearsOfExperience: 0,
+                              clinicAddress: "null",
+                              bio: "",
+                              profilePictureUrl: "null",
                             );
 
                             context.read<AuthCubit>().register(doctor: doctor);

@@ -12,6 +12,11 @@ class AppTextStyles {
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
+  static TextStyle get s30bold => const TextStyle(
+    color: ColorManager.primary,
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+  );
   static TextStyle get s18bold => const TextStyle(
     color: ColorManager.black,
     fontSize: 18,
@@ -20,6 +25,11 @@ class AppTextStyles {
   static TextStyle get s14bold => const TextStyle(
     color: ColorManager.black,
     fontSize: 14,
+    fontWeight: FontWeight.w600,
+  );
+  static TextStyle get s16bold => const TextStyle(
+    color: ColorManager.kGray500,
+    fontSize: 16,
     fontWeight: FontWeight.w600,
   );
 }

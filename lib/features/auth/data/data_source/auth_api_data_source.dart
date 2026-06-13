@@ -41,8 +41,9 @@ class AuthAPIDataSource implements AuthRemoteDataSource {
         "Password": doctor.password,
         "PhoneNumber": doctor.phoneNumber,
         "Gender": doctor.gender,
-        "Bio": doctor.bio,
-        "ProfilePicture": "",
+        "Bio": "doctor.bio",
+        "LicenseNumber": "doctor.licenseNumber",
+        "ProfilePicture": "doctor.licenseNumber",
       });
 
       await dioServices.post(endPoint: ApiEndPoints.register, data: formData);
