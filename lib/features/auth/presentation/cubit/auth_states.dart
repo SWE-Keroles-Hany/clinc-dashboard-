@@ -86,3 +86,18 @@ class ForgotPasswordResetError extends ForgotPasswordResetState {
 
   ForgotPasswordResetError(this.message);
 }
+
+// ----- LOGOUT STATES -----
+abstract class LogoutState extends AuthState {}
+
+class LogoutInitial extends LogoutState {}
+
+class LogoutLoading extends LogoutState {}
+
+class LogoutSuccess extends LogoutState {}
+
+class LogoutError extends LogoutState {
+  final String message;
+
+  LogoutError(this.message);
+}

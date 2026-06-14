@@ -8,6 +8,8 @@ abstract class AuthRepository {
     required String password,
   });
 
+  Future<Either<Failure, void>> logOut();
+
   Future<Either<Failure, void>> register({required DoctorEntity doctor});
 
   Future<Either<Failure, void>> forgotPasswordSendCode({required String email});

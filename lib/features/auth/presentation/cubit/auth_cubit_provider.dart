@@ -5,6 +5,7 @@ import 'package:clinc_dashboard/features/auth/domain/use_cases/forgot_password_r
 import 'package:clinc_dashboard/features/auth/domain/use_cases/forgot_password_send_code.dart';
 import 'package:clinc_dashboard/features/auth/domain/use_cases/forgot_password_verify_code.dart';
 import 'package:clinc_dashboard/features/auth/domain/use_cases/login.dart';
+import 'package:clinc_dashboard/features/auth/domain/use_cases/logout.dart';
 import 'package:clinc_dashboard/features/auth/domain/use_cases/register.dart';
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dio/dio.dart';
@@ -16,6 +17,7 @@ AuthCubit createAuthCubit() {
 
   return AuthCubit(
     loginUseCase: LoginUseCase(repository),
+    logoutUseCase: LogoutUseCase(repository),
     registerUseCase: RegisterUseCase(repository),
     forgotPasswordSendCodeUseCase: ForgotPasswordSendCodeUseCase(repository),
     forgotPasswordVerifyCodeUseCase: ForgotPasswordVerifyCodeUseCase(

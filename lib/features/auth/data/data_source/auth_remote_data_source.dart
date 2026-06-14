@@ -3,6 +3,8 @@ import 'package:clinc_dashboard/features/auth/data/models/doctor_model.dart';
 abstract class AuthRemoteDataSource {
   Future<void> login({required String email, required String password});
 
+  Future<void> logOut();
+
   Future<void> register({required DoctorModel doctor});
 
   Future<void> forgotPasswordSendCode({required String email});

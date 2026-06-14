@@ -4,12 +4,14 @@ import 'package:clinc_dashboard/features/auth/domain/use_cases/forgot_password_r
 import 'package:clinc_dashboard/features/auth/domain/use_cases/forgot_password_send_code.dart';
 import 'package:clinc_dashboard/features/auth/domain/use_cases/forgot_password_verify_code.dart';
 import 'package:clinc_dashboard/features/auth/domain/use_cases/login.dart';
+import 'package:clinc_dashboard/features/auth/domain/use_cases/logout.dart';
 import 'package:clinc_dashboard/features/auth/domain/use_cases/register.dart';
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final LoginUseCase loginUseCase;
+  final LogoutUseCase logoutUseCase;
   final RegisterUseCase registerUseCase;
   final ForgotPasswordSendCodeUseCase forgotPasswordSendCodeUseCase;
   final ForgotPasswordVerifyCodeUseCase forgotPasswordVerifyCodeUseCase;
@@ -17,6 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit({
     required this.loginUseCase,
+    required this.logoutUseCase,
     required this.registerUseCase,
     required this.forgotPasswordSendCodeUseCase,
     required this.forgotPasswordVerifyCodeUseCase,
@@ -96,6 +99,18 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (failure) => emit(ForgotPasswordResetError(failure.message)),
       (_) => emit(ForgotPasswordResetSuccess()),
+    );
+  }
+
+  //! LOGOUT
+  Future<void> logOut() async {
+    emit(LogoutLoading());
+
+    final result = await logoutUseCase();
+
+    result.fold(
+      (failure) => emit(LogoutError(failure.message)),
+      (_) => emit(LogoutSuccess()),
     );
   }
 }

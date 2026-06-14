@@ -32,6 +32,18 @@ class AuthAPIDataSource implements AuthRemoteDataSource {
   }
 
   @override
+  Future<void> logOut() async {
+    try {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      await sharedPreferences.remove('token');
+    } on Failure catch (error) {
+      throw Failure(message: error.message);
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
   Future<void> register({required DoctorModel doctor}) async {
     try {
       FormData formData = FormData.fromMap({
