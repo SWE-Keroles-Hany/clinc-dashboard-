@@ -8,4 +8,5 @@ class ApiEndPoints {
   static const String forgotPasswordReset = "Auth/reset-password";
   static const String dashboardStats = "Doctor/dashboard-stats";
   static const String appointments = "Doctor/appointments";
+  static const String myPatients = "Doctor/my-patients";
 }

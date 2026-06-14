@@ -4,26 +4,27 @@ import 'package:clinc_dashboard/core/widgets/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-class Tabs extends StatefulWidget {
-  const Tabs({super.key});
+class Tabs extends StatelessWidget {
+  final int selectedIndex;
+  final ValueChanged<int> onTabSelected;
 
-  @override
-  State<Tabs> createState() => _TabsState();
-}
-
-class _TabsState extends State<Tabs> {
-  int selectedIndex = 0;
-  final tabsItem = [
-    TabItem(title: "Dashboard", icon: Icons.dashboard, onTap: () {}),
-    TabItem(title: "Patients", icon: Icons.people, onTap: () {}),
-    TabItem(title: "Appointments", icon: Icons.calendar_today, onTap: () {}),
-    TabItem(title: "AI Chatting", icon: Icons.chat, onTap: () {}),
-    TabItem(title: "Settings", icon: Icons.settings, onTap: () {}),
-  ];
+  const Tabs({
+    super.key,
+    required this.selectedIndex,
+    required this.onTabSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
+    final tabsItem = [
+      TabItem(title: "Dashboard", icon: Icons.dashboard, onTap: () {}),
+      TabItem(title: "Patients", icon: Icons.people, onTap: () {}),
+      TabItem(title: "Appointments", icon: Icons.calendar_today, onTap: () {}),
+      TabItem(title: "AI Chatting", icon: Icons.chat, onTap: () {}),
+      TabItem(title: "Settings", icon: Icons.settings, onTap: () {}),
+    ];
+
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -33,13 +34,13 @@ class _TabsState extends State<Tabs> {
       child: Drawer(
         width: width * 0.18,
         backgroundColor: ColorManager.backgroud,
-        shape: BeveledRectangleBorder(),
+        shape: const BeveledRectangleBorder(),
         child: Padding(
           padding: EdgeInsets.only(left: 10.w, top: 20.h, bottom: 20.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ClincTitleAndSubtitle(),
+              const ClincTitleAndSubtitle(),
               SizedBox(height: 25.h),
               SizedBox(
                 height: 400.h,
@@ -50,26 +51,18 @@ class _TabsState extends State<Tabs> {
                     isSelected: index == selectedIndex,
                     title: tabsItem[index].title,
                     icon: tabsItem[index].icon,
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                    },
+                    onTap: () => onTabSelected(index),
                   ),
                   itemCount: tabsItem.length,
                   separatorBuilder: (context, index) => SizedBox(height: 15.h),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               TabItem(
                 isSelected: selectedIndex == 5,
                 title: "Logout",
                 icon: Icons.logout,
-                onTap: () {
-                  setState(() {
-                    selectedIndex = 5;
-                  });
-                },
+                onTap: () => onTabSelected(5),
               ),
             ],
           ),
