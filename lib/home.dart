@@ -8,6 +8,8 @@ import 'package:clinc_dashboard/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'features/settings_tab/presentation/settings_tab.dart';
+
 class Home extends StatefulWidget {
   static const String routeName = "Home";
   const Home({super.key});
@@ -33,8 +35,8 @@ class _HomeState extends State<Home> {
         child: const PatientTab(),
       ),
       AppointmentsTab(),
-      const Center(child: Text("AI Chatting Tab")),
-      const Center(child: Text("Settings Tab")),
+      const Center(child: Text("Chatting")),
+      SettingsTab(),
     ];
   }
 
