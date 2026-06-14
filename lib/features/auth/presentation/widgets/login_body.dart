@@ -11,13 +11,9 @@ class LoginBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          flex :4 , 
-          child: WelcomeSection(width: width),
-        ),
+        Expanded(flex: 4, child: WelcomeSection(width: width)),
         Expanded(flex: 3, child: LoginForm()),
       ],
     );
   }
 }
-

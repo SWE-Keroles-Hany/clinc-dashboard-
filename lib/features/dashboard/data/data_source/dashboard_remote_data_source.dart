@@ -3,5 +3,7 @@ import 'package:clinc_dashboard/features/dashboard/data/models/appointment_model
 abstract class DashboardRemoteDataSource {
   Future<List<int>> getDashboardStatus();
 
-  Future<List<AppointmentModel>> getTodayAppointments({required bool todayOnly});
+  Future<List<AppointmentModel>> getTodayAppointments({
+    required bool todayOnly,
+  });
 }

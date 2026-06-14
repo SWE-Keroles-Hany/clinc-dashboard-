@@ -3,12 +3,12 @@ import 'package:clinc_dashboard/features/patient_tab/domain/entities/patient_ent
 
 extension PatientModelMapper on PatientModel {
   PatientEntity get toEntity => PatientEntity(
-        patientId: patientId,
-        fullName: fullName,
-        age: age,
-        gender: gender,
-        phoneNumber: phoneNumber,
-        lastVisitDate: lastVisitDate,
-        profilePicUrl: profilePicUrl,
-      );
+    patientId: patientId,
+    fullName: fullName,
+    age: age,
+    gender: gender,
+    phoneNumber: phoneNumber,
+    lastVisitDate: lastVisitDate,
+    profilePicUrl: profilePicUrl,
+  );
 }

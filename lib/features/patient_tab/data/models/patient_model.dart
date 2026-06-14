@@ -21,7 +21,9 @@ class PatientModel {
     return PatientModel(
       patientId: json['patientId']?.toString() ?? '',
       fullName: json['fullName']?.toString() ?? '',
-      age: json['age'] is int ? json['age'] : int.tryParse(json['age']?.toString() ?? '') ?? 0,
+      age: json['age'] is int
+          ? json['age']
+          : int.tryParse(json['age']?.toString() ?? '') ?? 0,
       gender: json['gender']?.toString() ?? '',
       phoneNumber: json['phoneNumber']?.toString() ?? '',
       lastVisitDate: json['lastVisitDate']?.toString() ?? '',

@@ -20,42 +20,54 @@ class PatientRowLabels extends StatelessWidget {
             flex: 2,
             child: Text(
               "Patient ID",
-              style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+              style: AppTextStyles.s14bold.copyWith(
+                color: ColorManager.kGray500,
+              ),
             ),
           ),
           Expanded(
             flex: 5,
             child: Text(
               "Full Name",
-              style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+              style: AppTextStyles.s14bold.copyWith(
+                color: ColorManager.kGray500,
+              ),
             ),
           ),
           Expanded(
             flex: 1,
             child: Text(
               "Age",
-              style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+              style: AppTextStyles.s14bold.copyWith(
+                color: ColorManager.kGray500,
+              ),
             ),
           ),
           Expanded(
             flex: 2,
             child: Text(
               "Gender",
-              style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+              style: AppTextStyles.s14bold.copyWith(
+                color: ColorManager.kGray500,
+              ),
             ),
           ),
           Expanded(
             flex: 3,
             child: Text(
               "Phone Number",
-              style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+              style: AppTextStyles.s14bold.copyWith(
+                color: ColorManager.kGray500,
+              ),
             ),
           ),
           Expanded(
             flex: 3,
             child: Text(
               "Last Visit Date",
-              style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+              style: AppTextStyles.s14bold.copyWith(
+                color: ColorManager.kGray500,
+              ),
             ),
           ),
           Expanded(
@@ -64,7 +76,9 @@ class PatientRowLabels extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: Text(
                 "Actions",
-                style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+                style: AppTextStyles.s14bold.copyWith(
+                  color: ColorManager.kGray500,
+                ),
               ),
             ),
           ),

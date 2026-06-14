@@ -29,10 +29,7 @@ class PatientSuccess extends PatientState {
     required List<PatientEntity> patients,
     required List<PatientEntity> filteredPatients,
     super.searchQueryParams,
-  }) : super(
-          patients: patients,
-          filteredPatients: filteredPatients,
-        );
+  }) : super(patients: patients, filteredPatients: filteredPatients);
 }
 
 class PatientError extends PatientState {

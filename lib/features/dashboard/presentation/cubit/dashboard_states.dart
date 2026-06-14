@@ -25,20 +25,14 @@ class DashboardStatsLoading extends DashboardStatsState {
 }
 
 class DashboardStatsSuccess extends DashboardStatsState {
-  const DashboardStatsSuccess({
-    required List<int> stats,
-    super.appointments,
-  }) : super(stats: stats);
+  const DashboardStatsSuccess({required List<int> stats, super.appointments})
+    : super(stats: stats);
 }
 
 class DashboardStatsError extends DashboardStatsState {
   final String message;
 
-  const DashboardStatsError(
-    this.message, {
-    super.stats,
-    super.appointments,
-  });
+  const DashboardStatsError(this.message, {super.stats, super.appointments});
 }
 
 // ----- APPOINTMENTS STATES -----
@@ -64,9 +58,5 @@ class AppointmentsSuccess extends AppointmentsState {
 class AppointmentsError extends AppointmentsState {
   final String message;
 
-  const AppointmentsError(
-    this.message, {
-    super.stats,
-    super.appointments,
-  });
+  const AppointmentsError(this.message, {super.stats, super.appointments});
 }

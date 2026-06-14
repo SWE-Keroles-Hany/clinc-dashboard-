@@ -31,20 +31,14 @@ class DashboardCubit extends Cubit<DashboardState> {
         ),
       ),
       (stats) => emit(
-        DashboardStatsSuccess(
-          stats: stats,
-          appointments: state.appointments,
-        ),
+        DashboardStatsSuccess(stats: stats, appointments: state.appointments),
       ),
     );
   }
 
   Future<void> getTodayAppointments({required bool todayOnly}) async {
     emit(
-      AppointmentsLoading(
-        stats: state.stats,
-        appointments: state.appointments,
-      ),
+      AppointmentsLoading(stats: state.stats, appointments: state.appointments),
     );
 
     final result = await getTodayAppointmentsUseCase(todayOnly: todayOnly);
@@ -58,10 +52,7 @@ class DashboardCubit extends Cubit<DashboardState> {
         ),
       ),
       (appointments) => emit(
-        AppointmentsSuccess(
-          appointments: appointments,
-          stats: state.stats,
-        ),
+        AppointmentsSuccess(appointments: appointments, stats: state.stats),
       ),
     );
   }

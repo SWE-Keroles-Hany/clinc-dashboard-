@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import '../error/failure.dart';
 
 dynamic handleResponse(Response response) {
-  final message = response.statusMessage ?? "Some Thing Went Wrong"; 
+  final message = response.statusMessage ?? "Some Thing Went Wrong";
   if (response.statusCode == 200 || response.statusCode == 201) {
     return response.data;
   }

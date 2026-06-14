@@ -11,9 +11,11 @@ class ColorManager {
   static const Color backgroud = Color(0xFFF8F9FB);
   //! status
   static const Color completed = Color(0xff15803D);
+  static const Color confirmed = Color(0xfff59e0b);
   static const Color error = Color(0xffB91C1C);
   static const Color pending = Color(0xff1D4ED8);
   static const Color completedBg = Color(0xffF0FDF4);
+  static const Color confirmedBg = Color(0xffFEF3C7);
   static const Color errordBg = Color(0xffFEF2F2);
   static const Color pendingBg = Color(0xffEFF6FF);
 }

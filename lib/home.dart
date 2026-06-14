@@ -1,4 +1,5 @@
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
+import 'package:clinc_dashboard/features/appointments_tab/presentation/appointments_tab.dart';
 import 'package:clinc_dashboard/features/dashboard/presentation/cubit/dashboard_cubit_provider.dart';
 import 'package:clinc_dashboard/features/dashboard/presentation/dashboard_tab.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_cubit_provider.dart';
@@ -31,7 +32,7 @@ class _HomeState extends State<Home> {
         create: (_) => createPatientCubit(),
         child: const PatientTab(),
       ),
-      const Center(child: Text("Appointments Tab")),
+      AppointmentsTab(),
       const Center(child: Text("AI Chatting Tab")),
       const Center(child: Text("Settings Tab")),
     ];
@@ -63,13 +64,10 @@ class _HomeState extends State<Home> {
           ),
           Expanded(
             flex: 4,
-            child: IndexedStack(index: _selectedIndex, children: _tabs,
-            ),
+            child: IndexedStack(index: _selectedIndex, children: _tabs),
           ),
         ],
       ),
     );
   }
 }
-
-

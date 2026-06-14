@@ -13,9 +13,7 @@ class PatientWelcomeHeader extends StatelessWidget {
       children: [
         Text(
           "Patient Management",
-          style: AppTextStyles.s30bold.copyWith(
-            color: ColorManager.black,
-          ),
+          style: AppTextStyles.s30bold.copyWith(color: ColorManager.black),
         ),
         SizedBox(height: 6.h),
         Text(

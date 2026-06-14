@@ -78,7 +78,11 @@ class _PatientRowInfoState extends State<PatientRowInfo> {
                           ? NetworkImage(widget.patient.profilePicUrl)
                           : null,
                       child: widget.patient.profilePicUrl.isEmpty
-                          ? Icon(Icons.person, size: 18.sp, color: ColorManager.kGray500)
+                          ? Icon(
+                              Icons.person,
+                              size: 18.sp,
+                              color: ColorManager.kGray500,
+                            )
                           : null,
                     ),
                   ),
@@ -101,7 +105,9 @@ class _PatientRowInfoState extends State<PatientRowInfo> {
               flex: 1,
               child: Text(
                 "${widget.patient.age}",
-                style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+                style: AppTextStyles.s14bold.copyWith(
+                  color: ColorManager.kGray500,
+                ),
               ),
             ),
             // Gender
@@ -109,7 +115,9 @@ class _PatientRowInfoState extends State<PatientRowInfo> {
               flex: 2,
               child: Text(
                 widget.patient.gender,
-                style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+                style: AppTextStyles.s14bold.copyWith(
+                  color: ColorManager.kGray500,
+                ),
               ),
             ),
             // Phone Number
@@ -117,7 +125,9 @@ class _PatientRowInfoState extends State<PatientRowInfo> {
               flex: 3,
               child: Text(
                 widget.patient.phoneNumber,
-                style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+                style: AppTextStyles.s14bold.copyWith(
+                  color: ColorManager.kGray500,
+                ),
               ),
             ),
             // Last Visit Date
@@ -125,7 +135,9 @@ class _PatientRowInfoState extends State<PatientRowInfo> {
               flex: 3,
               child: Text(
                 widget.patient.lastVisitDate,
-                style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+                style: AppTextStyles.s14bold.copyWith(
+                  color: ColorManager.kGray500,
+                ),
               ),
             ),
             // Actions

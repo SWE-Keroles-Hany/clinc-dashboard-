@@ -142,8 +142,8 @@ class _PatientTabState extends State<PatientTab> {
                                 ),
                               ),
                             ),
+
                             // Download button
-                            
                           ],
                         ),
                         SizedBox(height: 20.h),

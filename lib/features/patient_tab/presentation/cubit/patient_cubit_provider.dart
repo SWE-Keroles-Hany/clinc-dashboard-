@@ -10,7 +10,5 @@ PatientCubit createPatientCubit() {
   final remoteDataSource = PatientAPIDataSource(dioServices);
   final repository = PatientRepositoryImpl(remoteDataSource);
 
-  return PatientCubit(
-    getPatientsUseCase: GetPatientsUseCase(repository),
-  );
+  return PatientCubit(getPatientsUseCase: GetPatientsUseCase(repository));
 }

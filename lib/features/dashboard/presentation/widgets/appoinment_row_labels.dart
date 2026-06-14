@@ -20,14 +20,18 @@ class AppinmentMainRowLabels extends StatelessWidget {
             flex: 4,
             child: Text(
               "Patient Name",
-              style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+              style: AppTextStyles.s14bold.copyWith(
+                color: ColorManager.kGray500,
+              ),
             ),
           ),
           Expanded(
             flex: 2,
             child: Text(
               "Time",
-              style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+              style: AppTextStyles.s14bold.copyWith(
+                color: ColorManager.kGray500,
+              ),
             ),
           ),
           Expanded(
@@ -36,7 +40,9 @@ class AppinmentMainRowLabels extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: Text(
                 "Status",
-                style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
+                style: AppTextStyles.s14bold.copyWith(
+                  color: ColorManager.kGray500,
+                ),
               ),
             ),
           ),

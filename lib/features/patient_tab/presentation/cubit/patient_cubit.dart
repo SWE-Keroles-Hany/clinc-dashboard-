@@ -5,9 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class PatientCubit extends Cubit<PatientState> {
   final GetPatientsUseCase getPatientsUseCase;
 
-  PatientCubit({
-    required this.getPatientsUseCase,
-  }) : super(const PatientInitial());
+  PatientCubit({required this.getPatientsUseCase})
+    : super(const PatientInitial());
 
   Future<void> getPatients() async {
     emit(
@@ -35,9 +34,15 @@ class PatientCubit extends Cubit<PatientState> {
         final filtered = query.isEmpty
             ? patients
             : patients.where((p) {
-                final matchName = p.fullName.toLowerCase().contains(query.toLowerCase());
-                final matchId = p.patientId.toLowerCase().contains(query.toLowerCase());
-                final matchPhone = p.phoneNumber.toLowerCase().contains(query.toLowerCase());
+                final matchName = p.fullName.toLowerCase().contains(
+                  query.toLowerCase(),
+                );
+                final matchId = p.patientId.toLowerCase().contains(
+                  query.toLowerCase(),
+                );
+                final matchPhone = p.phoneNumber.toLowerCase().contains(
+                  query.toLowerCase(),
+                );
                 return matchName || matchId || matchPhone;
               }).toList();
 
@@ -59,9 +64,15 @@ class PatientCubit extends Cubit<PatientState> {
     final filtered = query.isEmpty
         ? patients
         : patients.where((p) {
-            final matchName = p.fullName.toLowerCase().contains(query.toLowerCase());
-            final matchId = p.patientId.toLowerCase().contains(query.toLowerCase());
-            final matchPhone = p.phoneNumber.toLowerCase().contains(query.toLowerCase());
+            final matchName = p.fullName.toLowerCase().contains(
+              query.toLowerCase(),
+            );
+            final matchId = p.patientId.toLowerCase().contains(
+              query.toLowerCase(),
+            );
+            final matchPhone = p.phoneNumber.toLowerCase().contains(
+              query.toLowerCase(),
+            );
             return matchName || matchId || matchPhone;
           }).toList();
 

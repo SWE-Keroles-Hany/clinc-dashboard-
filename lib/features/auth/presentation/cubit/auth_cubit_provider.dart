@@ -18,7 +18,9 @@ AuthCubit createAuthCubit() {
     loginUseCase: LoginUseCase(repository),
     registerUseCase: RegisterUseCase(repository),
     forgotPasswordSendCodeUseCase: ForgotPasswordSendCodeUseCase(repository),
-    forgotPasswordVerifyCodeUseCase: ForgotPasswordVerifyCodeUseCase(repository),
+    forgotPasswordVerifyCodeUseCase: ForgotPasswordVerifyCodeUseCase(
+      repository,
+    ),
     forgotPasswordResetUseCase: ForgotPasswordResetUseCase(repository),
   );
 }
