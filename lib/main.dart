@@ -1,6 +1,9 @@
 import 'package:clinc_dashboard/home.dart';
 import 'package:flutter/material.dart';
 
+import 'core/routes/app_routes.dart';
+import 'features/auth/presentation/screens/signup_screen.dart';
+
 void main() {
   runApp(const ClincDashboard());
 }
@@ -11,11 +14,11 @@ class ClincDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Home(),
+      // home: Home(),
       debugShowCheckedModeBanner: false,
-      // routes: AppRoutes.routes,
+      routes: AppRoutes.routes,
       title: 'Clinc Dashboard',
-      // initialRoute: SignupScreen.routeName,
+      initialRoute: SignupScreen.routeName,
     );
   }
 }

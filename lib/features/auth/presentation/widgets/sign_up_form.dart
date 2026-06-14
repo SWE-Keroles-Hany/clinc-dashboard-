@@ -8,7 +8,6 @@ import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_states.dar
 import 'package:clinc_dashboard/features/auth/presentation/screens/login_screen.dart';
 import 'package:clinc_dashboard/features/auth/presentation/widgets/custom_dropdown.dart';
 import 'package:clinc_dashboard/features/auth/presentation/widgets/custom_input_field.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';

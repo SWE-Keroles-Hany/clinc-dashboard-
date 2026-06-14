@@ -20,7 +20,9 @@ class AuthAPIDataSource implements AuthRemoteDataSource {
         endPoint: ApiEndPoints.login,
         data: {"email": email, "password": password},
       );
+
       final token = response['token'];
+      log("token by kero $token");
       await sharedPreferences.setString("token", token);
     } on Failure catch (error) {
       throw Failure(message: error.message);

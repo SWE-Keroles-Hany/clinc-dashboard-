@@ -7,9 +7,12 @@ import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_states.dar
 import 'package:clinc_dashboard/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:clinc_dashboard/features/auth/presentation/screens/signup_screen.dart';
 import 'package:clinc_dashboard/features/auth/presentation/widgets/custom_input_field.dart';
+import 'package:clinc_dashboard/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+
+import '../../../dashboard/presentation/dashboard_tab.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -31,9 +34,7 @@ class _LoginFormState extends State<LoginForm> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Login successful')));
+          Navigator.pushReplacementNamed(context, Home.routeName);
         }
 
         if (state is LoginError) {
