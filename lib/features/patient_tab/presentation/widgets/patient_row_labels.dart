@@ -1,10 +1,11 @@
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-class PatientRowLabels extends StatelessWidget {
-  const PatientRowLabels({super.key});
+class PatientMainRowLabels extends StatelessWidget {
+  const PatientMainRowLabels({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class PatientRowLabels extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Text(
-              "Patient ID",
+              'patient_id'.tr(),
               style: AppTextStyles.s14bold.copyWith(
                 color: ColorManager.kGray500,
               ),
@@ -28,7 +29,7 @@ class PatientRowLabels extends StatelessWidget {
           Expanded(
             flex: 5,
             child: Text(
-              "Full Name",
+              'full_name'.tr(),
               style: AppTextStyles.s14bold.copyWith(
                 color: ColorManager.kGray500,
               ),
@@ -37,7 +38,7 @@ class PatientRowLabels extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              "Age",
+              'age'.tr(),
               style: AppTextStyles.s14bold.copyWith(
                 color: ColorManager.kGray500,
               ),
@@ -46,7 +47,7 @@ class PatientRowLabels extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Text(
-              "Gender",
+              'gender'.tr(),
               style: AppTextStyles.s14bold.copyWith(
                 color: ColorManager.kGray500,
               ),
@@ -55,7 +56,7 @@ class PatientRowLabels extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Text(
-              "Phone Number",
+              'phone_number'.tr(),
               style: AppTextStyles.s14bold.copyWith(
                 color: ColorManager.kGray500,
               ),
@@ -64,7 +65,7 @@ class PatientRowLabels extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Text(
-              "Last Visit Date",
+              'last_visit_date'.tr(),
               style: AppTextStyles.s14bold.copyWith(
                 color: ColorManager.kGray500,
               ),
@@ -75,7 +76,7 @@ class PatientRowLabels extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerRight,
               child: Text(
-                "Actions",
+                'actions'.tr(),
                 style: AppTextStyles.s14bold.copyWith(
                   color: ColorManager.kGray500,
                 ),

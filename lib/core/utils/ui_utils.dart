@@ -81,5 +81,14 @@ class UiUtils {
     );
   }
 
+  static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
+    BuildContext context,
+    String message,
+  ) {
+    return ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   static void hideLoading(BuildContext context) => Navigator.of(context).pop();
 }

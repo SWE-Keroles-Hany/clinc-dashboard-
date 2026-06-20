@@ -1,6 +1,14 @@
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
+import 'package:clinc_dashboard/features/settings_tab/presentation/clinic_information_card.dart';
+import 'package:clinc_dashboard/features/settings_tab/presentation/account_settings_card.dart';
+import 'package:clinc_dashboard/features/settings_tab/presentation/preferences_card.dart';
+import 'package:clinc_dashboard/features/settings_tab/presentation/need_help_card.dart';
+import 'package:clinc_dashboard/features/settings_tab/presentation/cubit/settings_cubit.dart';
+import 'package:clinc_dashboard/features/settings_tab/presentation/cubit/settings_states.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingsTab extends StatefulWidget {
   const SettingsTab({super.key});
@@ -22,6 +30,8 @@ class _SettingsTabState extends State<SettingsTab> {
 
   @override
   void initState() {
+    context.read<SettingsCubit>().loadLanguage();
+
     super.initState();
     clinicNameController = TextEditingController(
       text: 'MedCore General Hospital',
@@ -50,11 +60,6 @@ class _SettingsTabState extends State<SettingsTab> {
     super.dispose();
   }
 
-  Widget _label(String text) => Text(
-    text,
-    style: AppTextStyles.s14bold.copyWith(color: ColorManager.kGray500),
-  );
-
   InputDecoration _inputDecoration() => InputDecoration(
     filled: true,
     fillColor: ColorManager.lightGray,
@@ -77,376 +82,122 @@ class _SettingsTabState extends State<SettingsTab> {
     });
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Settings saved')));
+    ).showSnackBar(SnackBar(content: Text('settings_saved'.tr())));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorManager.backgroud,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      child: Column(
-        children: [
-          // Top row with title and save button
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('System Settings', style: AppTextStyles.s30bold),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Manage your clinic preferences and administrative details.',
-                      style: AppTextStyles.s14bold.copyWith(
-                        color: ColorManager.kGray500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              ElevatedButton.icon(
-                onPressed: _saveChanges,
-                icon: const Icon(Icons.save),
-                label: const Text('Save Changes'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorManager.primary,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                    vertical: 14,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
+    final labelStyle = AppTextStyles.s14bold.copyWith(
+      color: ColorManager.kGray500,
+    );
 
-          // Main content two-column layout
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocListener<SettingsCubit, SettingsState>(
+      listener: (context, state) {
+        if (state is SettingsLoaded) {
+          final currentLocale = EasyLocalization.of(
+            context,
+          )?.locale.languageCode;
+          if (currentLocale != state.languageCode) {
+            context.setLocale(Locale(state.languageCode));
+          }
+          setState(() {});
+        }
+      },
+      child: Container(
+        color: ColorManager.backgroud,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        child: Column(
+          children: [
+            // Top row with title and save button
+            Row(
               children: [
-                // Left main column
                 Expanded(
-                  flex: 3,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Clinic Information card
-                      Card(
-                        color: ColorManager.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.apartment,
-                                        color: ColorManager.primary,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        'Clinic Information',
-                                        style: AppTextStyles.s20bold,
-                                      ),
-                                    ],
-                                  ),
-                                  TextButton(
-                                    onPressed: _toggleEdit,
-                                    child: Text(_isEditing ? 'Cancel' : 'Edit'),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-
-                              // Grid of inputs
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        _label('Clinic Name'),
-                                        const SizedBox(height: 6),
-                                        TextFormField(
-                                          controller: clinicNameController,
-                                          readOnly: !_isEditing,
-                                          decoration: _inputDecoration(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        _label('Phone Number'),
-                                        const SizedBox(height: 6),
-                                        TextFormField(
-                                          controller: phoneController,
-                                          readOnly: !_isEditing,
-                                          decoration: _inputDecoration(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        _label('Email Address'),
-                                        const SizedBox(height: 6),
-                                        TextFormField(
-                                          controller: emailController,
-                                          readOnly: !_isEditing,
-                                          decoration: _inputDecoration(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        _label('Official Website'),
-                                        const SizedBox(height: 6),
-                                        TextFormField(
-                                          controller: websiteController,
-                                          readOnly: !_isEditing,
-                                          decoration: _inputDecoration(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              _label('Clinic Address'),
-                              const SizedBox(height: 6),
-                              TextFormField(
-                                controller: addressController,
-                                readOnly: !_isEditing,
-                                maxLines: 3,
-                                decoration: _inputDecoration(),
-                              ),
-                            ],
-                          ),
-                        ),
+                      Text(
+                        'system_settings'.tr(),
+                        style: AppTextStyles.s30bold,
                       ),
-
-                      const SizedBox(height: 16),
-
-                      // Account Settings card
-                      Card(
-                        color: ColorManager.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.person,
-                                    color: ColorManager.primary,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    'Account Settings',
-                                    style: AppTextStyles.s20bold,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        _label('Profile Name'),
-                                        const SizedBox(height: 6),
-                                        TextFormField(
-                                          controller: profileNameController,
-                                          readOnly: !_isEditing,
-                                          decoration: _inputDecoration(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        _label('Personal Email'),
-                                        const SizedBox(height: 6),
-                                        TextFormField(
-                                          controller: personalEmailController,
-                                          readOnly: !_isEditing,
-                                          decoration: _inputDecoration(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              // const SizedBox(height: 12),
-                              // TextButton.icon(
-                              //   onPressed: () {},
-                              //   icon: const Icon(Icons.lock_outline),
-                              //   label: const Text('Change Password'),
-                              // ),
-                            ],
-                          ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'manage_clinic_preferences'.tr(),
+                        style: AppTextStyles.s14bold.copyWith(
+                          color: ColorManager.kGray500,
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                const SizedBox(width: 20),
-
-                // Right sidebar
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      Card(
-                        color: ColorManager.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.tune,
-                                    color: ColorManager.primary,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    'Preferences',
-                                    style: AppTextStyles.s18bold,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              _label('Language Selection'),
-                              const SizedBox(height: 6),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: ColorManager.lightGray,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: DropdownButton<String>(
-                                  value: 'English (US)',
-                                  items: ['English (US)', 'Arabic']
-                                      .map(
-                                        (e) => DropdownMenuItem(
-                                          value: e,
-                                          child: Text(e),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (_) {},
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Dark Mode',
-                                    style: AppTextStyles.s14bold,
-                                  ),
-                                  Switch(value: false, onChanged: (_) {}),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 12),
-                      Card(
-                        color: ColorManager.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Need Help?', style: AppTextStyles.s18bold),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Our clinical support team is available 24/7 for system assistance.',
-                                style: AppTextStyles.s14bold.copyWith(
-                                  color: ColorManager.kGray500,
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: ColorManager.white,
-                                  side: BorderSide(
-                                    color: ColorManager.kGray500,
-                                  ),
-                                ),
-                                child: Text(
-                                  'Contact Support',
-                                  style: AppTextStyles.s14bold.copyWith(
-                                    color: ColorManager.primary,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                ElevatedButton.icon(
+                  onPressed: _saveChanges,
+                  icon: const Icon(Icons.save),
+                  label: Text('save_changes'.tr()),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorManager.primary,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 14,
+                    ),
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: 20),
+
+            // Main content two-column layout
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Left main column
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      children: [
+                        ClinicInformationCard(
+                          clinicNameController: clinicNameController,
+                          phoneController: phoneController,
+                          emailController: emailController,
+                          websiteController: websiteController,
+                          addressController: addressController,
+                          isEditing: _isEditing,
+                          onToggleEdit: _toggleEdit,
+                          inputDecoration: _inputDecoration(),
+                          labelStyle: labelStyle,
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        AccountSettingsCard(
+                          profileNameController: profileNameController,
+                          personalEmailController: personalEmailController,
+                          isEditing: _isEditing,
+                          inputDecoration: _inputDecoration(),
+                          labelStyle: labelStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(width: 20),
+
+                  // Right sidebar
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        PreferencesCard(labelStyle: labelStyle),
+                        const SizedBox(height: 12),
+                        const NeedHelpCard(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

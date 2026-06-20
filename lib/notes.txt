@@ -1,0 +1,18 @@
+1) Dashboard Tab : 
+- imgURL For patient (want to return from api)
+
+2) patient Tab 
+- User profile 
+- numbers of patients (pagination)
+- search by name (api)
+
+
+3) appointment 
+- api (filter , update medical history , get appointments)
+
+4) settings 
+- api  ( get , update )
+- dark/light - language 
+==
+1- save singing ?
+2- implement getIt

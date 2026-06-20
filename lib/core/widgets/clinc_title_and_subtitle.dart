@@ -1,5 +1,6 @@
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ClincTitleAndSubtitle extends StatelessWidget {
@@ -10,12 +11,12 @@ class ClincTitleAndSubtitle extends StatelessWidget {
     return ListTile(
       title: Text(
         textAlign: TextAlign.center,
-        "TeleMedicine",
+        "app_title".tr(),
         style: AppTextStyles.s30bold,
       ),
       subtitle: Text(
         textAlign: TextAlign.center,
-        "Clincal Management",
+        "clinical_management".tr(),
         style: AppTextStyles.s14bold.copyWith(
           fontWeight: FontWeight.w600,
           color: ColorManager.kGray500,

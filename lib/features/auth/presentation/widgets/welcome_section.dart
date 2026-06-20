@@ -1,4 +1,5 @@
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeSection extends StatelessWidget {
@@ -12,18 +13,19 @@ class WelcomeSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset("assets/icons/telemedicine.png"),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
-          "Empowering clinicians with precision AI tools.",
+          "welcome_empowering".tr(),
           style: AppTextStyles.s40bold,
+          textAlign: TextAlign.center,
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         SizedBox(
           width: width * 0.5,
           child: Text(
             style: AppTextStyles.s20bold,
             textAlign: TextAlign.center,
-            "Join the next generation of healthcare delivery. Our unified clinical operating system integrates patient data, diagnostic AI, and seamless workflow management into one sterile, focused environment.",
+            "welcome_join".tr(),
           ),
         ),
       ],

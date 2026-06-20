@@ -1,6 +1,7 @@
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:clinc_dashboard/core/widgets/clinc_title_and_subtitle.dart';
 import 'package:clinc_dashboard/core/widgets/tab_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
@@ -18,11 +19,10 @@ class Tabs extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final tabsItem = [
-      TabItem(title: "Dashboard", icon: Icons.dashboard, onTap: () {}),
-      TabItem(title: "Patients", icon: Icons.people, onTap: () {}),
-      TabItem(title: "Appointments", icon: Icons.calendar_today, onTap: () {}),
-      TabItem(title: "AI Chatting", icon: Icons.chat, onTap: () {}),
-      TabItem(title: "Settings", icon: Icons.settings, onTap: () {}),
+      TabItem(title: "dashboard".tr(), icon: Icons.dashboard, onTap: () {}),
+      TabItem(title: "patients".tr(), icon: Icons.people, onTap: () {}),
+      TabItem(title: "appointments".tr(), icon: Icons.calendar_today, onTap: () {}),
+      TabItem(title: "settings".tr(), icon: Icons.settings, onTap: () {}),
     ];
 
     return Container(
@@ -59,23 +59,23 @@ class Tabs extends StatelessWidget {
               ),
               const Spacer(),
               TabItem(
-                isSelected: selectedIndex == 5,
-                title: "Logout",
+                isSelected: selectedIndex == 4,
+                title: "logout".tr(),
                 icon: Icons.logout,
                 onTap: () {
                   showDialog<bool>(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: const Text('Confirm Logout'),
-                      content: const Text('Are you sure you want to logout?'),
+                      title: Text('confirm_logout'.tr()),
+                      content: Text('are_you_sure_logout'.tr()),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(false),
-                          child: const Text('Cancel'),
+                          child: Text('cancel'.tr()),
                         ),
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(true),
-                          child: const Text('Logout'),
+                          child: Text('logout'.tr()),
                         ),
                       ],
                     ),

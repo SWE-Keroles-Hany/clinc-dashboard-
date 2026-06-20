@@ -1,21 +1,18 @@
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:clinc_dashboard/features/patient_tab/domain/entities/patient_entity.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 class PatientRowInfo extends StatefulWidget {
   final PatientEntity patient;
   final VoidCallback onViewPressed;
-  final VoidCallback onEditPressed;
-  final VoidCallback onHistoryPressed;
 
   const PatientRowInfo({
     super.key,
     required this.patient,
     required this.onViewPressed,
-    required this.onEditPressed,
-    required this.onHistoryPressed,
   });
 
   @override
@@ -24,7 +21,6 @@ class PatientRowInfo extends StatefulWidget {
 
 class _PatientRowInfoState extends State<PatientRowInfo> {
   bool _isHovered = false;
-
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
@@ -114,7 +110,7 @@ class _PatientRowInfoState extends State<PatientRowInfo> {
             Expanded(
               flex: 2,
               child: Text(
-                widget.patient.gender,
+                getGender(context, widget.patient.gender),
                 style: AppTextStyles.s14bold.copyWith(
                   color: ColorManager.kGray500,
                 ),
@@ -154,7 +150,7 @@ class _PatientRowInfoState extends State<PatientRowInfo> {
                       iconSize: 20.sp,
                       color: ColorManager.kGray500,
                       hoverColor: ColorManager.primary.withValues(alpha: 0.1),
-                      tooltip: "View Profile",
+                      tooltip: 'view_profile'.tr(),
                       onPressed: widget.onViewPressed,
                     ),
                     // IconButton(
@@ -181,5 +177,18 @@ class _PatientRowInfoState extends State<PatientRowInfo> {
         ),
       ),
     );
+  }
+
+  String getGender(BuildContext context, String gender) {
+    final currentLocale = EasyLocalization.of(context)?.locale.languageCode;
+    if (currentLocale == 'ar') {
+      if (gender == "Male") {
+        return "ذكر";
+      } else {
+        return "إنثى";
+      }
+    } else {
+      return gender;
+    }
   }
 }

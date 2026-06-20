@@ -1,6 +1,7 @@
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
-import 'package:clinc_dashboard/features/dashboard/domain/entities/appointment_entity.dart';
+import 'package:clinc_dashboard/features/dashboard_tab/domain/entities/appointment_entity.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:intl/intl.dart';
@@ -67,6 +68,22 @@ class _AppointmentCardState extends State<AppointmentCard> {
     }
   }
 
+  String _translateStatus(String status) {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return 'pending';
+      case 'confirmed':
+        return 'confirmed';
+      case 'completed':
+        return 'completed';
+      case 'cancelled':
+      case 'canceled':
+        return 'cancelled';
+      default:
+        return status.toLowerCase();
+    }
+  }
+
   String _formatTime(String iso) {
     try {
       final dt = DateTime.parse(iso);
@@ -90,7 +107,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
-                Text('Change Status', style: AppTextStyles.s20bold),
+                Text('change_status'.tr(), style: AppTextStyles.s20bold),
                 const SizedBox(height: 16),
                 ..._allStatuses.map(
                   (status) => Padding(
@@ -100,7 +117,8 @@ class _AppointmentCardState extends State<AppointmentCard> {
                       child: InkWell(
                         onTap: () {
                           setState(() => _currentStatus = status);
-                          widget.onStatusChanged?.call(status);
+                          //! >>>
+                          //        widget.onStatusChanged?.call(status);
                           Navigator.pop(context);
                         },
                         borderRadius: BorderRadius.circular(8),
@@ -122,7 +140,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                status,
+                                _translateStatus(status).tr(),
                                 style: AppTextStyles.s14bold.copyWith(
                                   color: _statusColor(status),
                                 ),
@@ -167,7 +185,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
         ),
         child: Row(
           children: [
-            // Leading avatar
+            //! Leading avatar
             CircleAvatar(
               radius: 26,
               backgroundColor: ColorManager.lightGray,
@@ -182,9 +200,9 @@ class _AppointmentCardState extends State<AppointmentCard> {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12.w),
 
-            // Details
+            //! Details
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -204,7 +222,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
               ),
             ),
 
-            // Status
+            //! Status
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
@@ -212,7 +230,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                status,
+                _translateStatus(status).tr(),
                 style: AppTextStyles.s14bold.copyWith(
                   color: _statusColor(status),
                 ),

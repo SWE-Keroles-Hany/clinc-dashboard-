@@ -6,6 +6,7 @@ import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_states.dar
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_cubit_provider.dart';
 import 'package:clinc_dashboard/features/auth/presentation/screens/forgot_password_reset_screen.dart';
 import 'package:clinc_dashboard/features/auth/presentation/widgets/custom_input_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -62,7 +63,7 @@ class _ForgotPasswordVerifyFormState extends State<ForgotPasswordVerifyForm> {
       listener: (context, state) {
         if (state is ForgotPasswordVerifyCodeSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Code verified successfully')),
+            SnackBar(content: Text('code_verified'.tr())),
           );
           Navigator.pushReplacementNamed(
             context,
@@ -86,7 +87,7 @@ class _ForgotPasswordVerifyFormState extends State<ForgotPasswordVerifyForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Verify Code',
+                'verify_code'.tr(),
                 style: TextStyle(
                   fontSize: 36.sp,
                   fontWeight: FontWeight.bold,
@@ -95,15 +96,15 @@ class _ForgotPasswordVerifyFormState extends State<ForgotPasswordVerifyForm> {
               ),
               SizedBox(height: 8.h),
               Text(
-                'Enter the code sent to your email address.',
+                'enter_email_code'.tr(),
                 style: TextStyle(fontSize: 18.sp, color: ColorManager.black),
               ),
               SizedBox(height: 30.h),
               CustomInputField(
                 icon: Icons.email,
-                hintText: 'keroles@gmail.com',
+                hintText: 'email_hint'.tr(),
                 keyboardType: TextInputType.emailAddress,
-                title: 'Email Address',
+                title: 'email_address'.tr(),
                 controller: emailController,
                 validator: AppValidations.emailValidator,
               ),
@@ -112,11 +113,11 @@ class _ForgotPasswordVerifyFormState extends State<ForgotPasswordVerifyForm> {
                 icon: Icons.confirmation_num,
                 hintText: '123456',
                 keyboardType: TextInputType.number,
-                title: 'Verification Code',
+                title: 'verification_code'.tr(),
                 controller: codeController,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Enter the verification code';
+                    return 'enter_verification_code'.tr();
                   }
                   return null;
                 },
@@ -133,7 +134,7 @@ class _ForgotPasswordVerifyFormState extends State<ForgotPasswordVerifyForm> {
                           );
                         }
                       },
-                title: isLoading ? 'Verifying...' : 'Verify Code',
+                title: isLoading ? 'verifying'.tr() : 'verify_code'.tr(),
                 titleColor: ColorManager.white,
                 bgColor: ColorManager.primary,
                 width: widget.width,

@@ -8,6 +8,7 @@ import 'package:clinc_dashboard/features/auth/presentation/screens/forgot_passwo
 import 'package:clinc_dashboard/features/auth/presentation/screens/signup_screen.dart';
 import 'package:clinc_dashboard/features/auth/presentation/widgets/custom_input_field.dart';
 import 'package:clinc_dashboard/home.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -55,13 +56,13 @@ class _LoginFormState extends State<LoginForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Welcome Back',
+                    'welcome_back'.tr(),
                     style: AppTextStyles.s40bold.copyWith(
                       color: ColorManager.black,
                     ),
                   ),
                   Text(
-                    'Please sign in to access your account',
+                    'sign_in_prompt'.tr(),
                     style: AppTextStyles.s18bold.copyWith(
                       color: ColorManager.black,
                     ),
@@ -69,9 +70,9 @@ class _LoginFormState extends State<LoginForm> {
                   SizedBox(height: 30.h),
                   CustomInputField(
                     icon: Icons.email,
-                    hintText: 'keroles@gmail.com',
+                    hintText: 'email_hint'.tr(),
                     keyboardType: TextInputType.emailAddress,
-                    title: 'Email Address',
+                    title: 'email_address'.tr(),
                     controller: emailController,
                     validator: AppValidations.emailValidator,
                   ),
@@ -79,8 +80,8 @@ class _LoginFormState extends State<LoginForm> {
                   CustomInputField(
                     isPasswordField: true,
                     icon: Icons.lock,
-                    hintText: '*************',
-                    title: 'Password',
+                    hintText: 'password_hint'.tr(),
+                    title: 'password'.tr(),
                     controller: passwordController,
                     validator: (value) =>
                         AppValidations.passwordValidator(value: value),
@@ -96,7 +97,7 @@ class _LoginFormState extends State<LoginForm> {
                         );
                       },
                       child: Text(
-                        'Forgot Password?',
+                        'forgot_password'.tr(),
                         style: AppTextStyles.s18bold.copyWith(
                           color: ColorManager.primary,
                         ),
@@ -117,7 +118,7 @@ class _LoginFormState extends State<LoginForm> {
                         },
                       ),
                       Text(
-                        'Remember me',
+                        'remember_me'.tr(),
                         style: AppTextStyles.s18bold.copyWith(
                           color: ColorManager.black,
                         ),
@@ -136,7 +137,7 @@ class _LoginFormState extends State<LoginForm> {
                               );
                             }
                           },
-                    title: isLoading ? 'Signing In...' : 'Log In',
+                    title: isLoading ? 'signing_in'.tr() : 'log_in'.tr(),
                     titleColor: ColorManager.white,
                     bgColor: ColorManager.primary,
                     width: width,
@@ -146,7 +147,7 @@ class _LoginFormState extends State<LoginForm> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'New to TeleMedicine? ',
+                        'new_to_telemedicine'.tr(),
                         style: AppTextStyles.s20bold,
                       ),
                       InkWell(
@@ -157,7 +158,7 @@ class _LoginFormState extends State<LoginForm> {
                           );
                         },
                         child: Text(
-                          'Create an Account',
+                          'create_an_account'.tr(),
                           style: AppTextStyles.s20bold.copyWith(
                             color: ColorManager.primary,
                           ),

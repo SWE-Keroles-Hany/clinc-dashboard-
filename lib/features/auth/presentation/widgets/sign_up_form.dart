@@ -8,6 +8,7 @@ import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_states.dar
 import 'package:clinc_dashboard/features/auth/presentation/screens/login_screen.dart';
 import 'package:clinc_dashboard/features/auth/presentation/widgets/custom_dropdown.dart';
 import 'package:clinc_dashboard/features/auth/presentation/widgets/custom_input_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -37,7 +38,7 @@ class _SignUpFormState extends State<SignUpForm> {
       listener: (context, state) {
         if (state is RegisterSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Registration successful')),
+            SnackBar(content: Text('registration_successful'.tr())),
           );
           Navigator.pushReplacementNamed(context, LoginScreen.routeName);
         }
@@ -60,22 +61,22 @@ class _SignUpFormState extends State<SignUpForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Create Your Account',
+                    'create_your_account'.tr(),
                     style: AppTextStyles.s40bold.copyWith(
                       color: ColorManager.black,
                     ),
                   ),
                   Text(
-                    'Secure access for medical practitioners',
+                    'secure_access_practitioners'.tr(),
                     style: AppTextStyles.s18bold.copyWith(
                       color: ColorManager.black,
                     ),
                   ),
                   CustomInputField(
                     icon: Icons.person,
-                    hintText: 'Keroles Hany',
+                    hintText: 'name_hint'.tr(),
                     keyboardType: TextInputType.text,
-                    title: 'Full Name',
+                    title: 'full_name'.tr(),
                     controller: fullNameController,
                     validator: AppValidations.nameValidator,
                   ),
@@ -86,9 +87,9 @@ class _SignUpFormState extends State<SignUpForm> {
                         flex: 2,
                         child: CustomInputField(
                           icon: Icons.medical_services_rounded,
-                          hintText: 'Dental',
+                          hintText: 'specialty_hint'.tr(),
                           keyboardType: TextInputType.text,
-                          title: 'Specialty',
+                          title: 'specialty'.tr(),
                           controller: specialtyController,
                           validator: AppValidations.nameValidator,
                         ),
@@ -100,13 +101,16 @@ class _SignUpFormState extends State<SignUpForm> {
                         child: CustomDropDown(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please select The Gender';
+                              return 'select_gender'.tr();
                             }
                             return null;
                           },
-                          label: 'Gender',
+                          label: 'gender'.tr(),
                           value: selectedGender,
-                          items: const ['Male', 'Female'],
+                          items: [
+                            'male'.tr(),
+                            'female'.tr(),
+                          ],
                           onChanged: (value) {
                             if (value != null) {
                               setState(() {
@@ -121,18 +125,18 @@ class _SignUpFormState extends State<SignUpForm> {
                   SizedBox(height: 10.h),
                   CustomInputField(
                     icon: Icons.phone,
-                    hintText: '+20 1280727589',
+                    hintText: 'phone_hint'.tr(),
                     keyboardType: TextInputType.phone,
-                    title: 'Phone Number',
+                    title: 'phone_number'.tr(),
                     controller: phoneNumberController,
                     validator: AppValidations.phoneNumberValidator,
                   ),
                   SizedBox(height: 10.h),
                   CustomInputField(
                     icon: Icons.email,
-                    hintText: 'keroles@gmail.com',
+                    hintText: 'email_hint'.tr(),
                     keyboardType: TextInputType.emailAddress,
-                    title: 'Email Address',
+                    title: 'email_address'.tr(),
                     controller: emailController,
                     validator: AppValidations.emailValidator,
                   ),
@@ -140,8 +144,8 @@ class _SignUpFormState extends State<SignUpForm> {
                   CustomInputField(
                     isPasswordField: true,
                     icon: Icons.lock,
-                    hintText: '*************',
-                    title: 'Password',
+                    hintText: 'password_hint'.tr(),
+                    title: 'password'.tr(),
                     controller: passwordController,
                     validator: (value) =>
                         AppValidations.passwordValidator(value: value),
@@ -150,8 +154,8 @@ class _SignUpFormState extends State<SignUpForm> {
                   CustomInputField(
                     isPasswordField: true,
                     icon: Icons.lock,
-                    hintText: '*************',
-                    title: 'Confirm Password',
+                    hintText: 'password_hint'.tr(),
+                    title: 'confirm_password'.tr(),
                     controller: confirmPasswordController,
                     validator: (value) =>
                         AppValidations.confirmPasswordValidator(
@@ -175,7 +179,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       ),
                       Expanded(
                         child: Text(
-                          'I agree to the Terms of Service and Privacy Policy',
+                          'terms_agree'.tr(),
                           style: AppTextStyles.s18bold.copyWith(
                             color: ColorManager.black,
                           ),
@@ -194,8 +198,8 @@ class _SignUpFormState extends State<SignUpForm> {
                             }
                             if (!isAgreedToTerms) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Please agree to the terms'),
+                                SnackBar(
+                                  content: Text('please_agree_terms'.tr()),
                                 ),
                               );
                               return;
@@ -216,7 +220,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
                             context.read<AuthCubit>().register(doctor: doctor);
                           },
-                    title: isLoading ? 'Signing Up...' : 'Sign Up',
+                    title: isLoading ? 'creating_account'.tr() : 'sign_up'.tr(),
                     titleColor: ColorManager.white,
                     bgColor: ColorManager.primary,
                     width: width,
@@ -226,7 +230,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Already have an account?',
+                        'already_have_account'.tr(),
                         style: AppTextStyles.s20bold,
                       ),
                       InkWell(
@@ -237,7 +241,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           );
                         },
                         child: Text(
-                          ' Log in',
+                          'login'.tr(),
                           style: AppTextStyles.s20bold.copyWith(
                             color: ColorManager.primary,
                           ),

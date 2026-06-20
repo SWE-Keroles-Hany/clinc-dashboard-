@@ -17,6 +17,7 @@ class CustomInputField extends StatefulWidget {
     this.maxLines = 1,
     required this.hintText,
     required this.icon,
+    this.onChanged,
   });
   final TextEditingController controller;
   final bool isPasswordField;
@@ -25,7 +26,7 @@ class CustomInputField extends StatefulWidget {
   final String title;
   final String hintText;
   final IconData icon;
-
+  final Function(String)? onChanged;
   final String? Function(String?)? validator;
   final int maxLines;
   final TextInputType? keyboardType;
@@ -46,7 +47,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
         TextFormField(
           onTap: () => pickDate(context, widget.isTabedEnabed),
           keyboardType: widget.keyboardType,
-
+          onChanged: widget.onChanged,
           canRequestFocus: true,
           maxLines: widget.maxLines,
           focusNode: FocusNode(descendantsAreTraversable: true),

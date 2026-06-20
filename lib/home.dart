@@ -1,12 +1,14 @@
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
+import 'package:clinc_dashboard/core/utils/ui_utils.dart';
 import 'package:clinc_dashboard/features/appointments_tab/presentation/appointments_tab.dart';
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_states.dart';
 import 'package:clinc_dashboard/features/auth/presentation/screens/login_screen.dart';
-import 'package:clinc_dashboard/features/dashboard/presentation/cubit/dashboard_cubit_provider.dart';
-import 'package:clinc_dashboard/features/dashboard/presentation/dashboard_tab.dart';
+import 'package:clinc_dashboard/features/dashboard_tab/presentation/cubit/dashboard_cubit_provider.dart';
+import 'package:clinc_dashboard/features/dashboard_tab/presentation/dashboard_tab.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_cubit_provider.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/patient_tab.dart';
+import 'package:clinc_dashboard/features/settings_tab/presentation/cubit/settings_cubit_provider.dart';
 import 'package:clinc_dashboard/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,8 +40,10 @@ class _HomeState extends State<Home> {
         child: const PatientTab(),
       ),
       AppointmentsTab(),
-      const Center(child: Text("Chatting")),
-      SettingsTab(),
+      BlocProvider(
+        create: (_) => createSettingsCubit(),
+        child: const SettingsTab(),
+      ),
     ];
   }
 
@@ -50,9 +54,7 @@ class _HomeState extends State<Home> {
         if (state is LogoutSuccess) {
           Navigator.pushReplacementNamed(context, LoginScreen.routeName);
         } else if (state is LogoutError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          UiUtils.showSnackBar(context, state.message);
         }
       },
       child: Scaffold(
@@ -64,7 +66,7 @@ class _HomeState extends State<Home> {
               child: Tabs(
                 selectedIndex: _selectedIndex,
                 onTabSelected: (index) {
-                  if (index == 5) {
+                  if (index == 4) {
                     context.read<AuthCubit>().logOut();
                   } else {
                     setState(() {

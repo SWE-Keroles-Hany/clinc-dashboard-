@@ -6,6 +6,7 @@ import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_states.dar
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_cubit_provider.dart';
 import 'package:clinc_dashboard/features/auth/presentation/screens/forgot_password_verify_screen.dart';
 import 'package:clinc_dashboard/features/auth/presentation/widgets/custom_input_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -56,7 +57,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
       listener: (context, state) {
         if (state is ForgotPasswordSendCodeSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Code sent to your email')),
+            SnackBar(content: Text('code_sent'.tr())),
           );
           Navigator.pushReplacementNamed(
             context,
@@ -86,7 +87,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                   children: [
                     Text(
                       textAlign: TextAlign.center,
-                      'Forgot Password',
+                      'forgot_password_title'.tr(),
                       style: TextStyle(
                         fontSize: 36.sp,
                         fontWeight: FontWeight.bold,
@@ -96,7 +97,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                     SizedBox(height: 15.h),
                     Text(
                       textAlign: TextAlign.center,
-                      'Enter your registered email and we will send you a reset code.',
+                      'enter_registered_email'.tr(),
                       style: TextStyle(
                         fontSize: 20.sp,
                         color: ColorManager.black,
@@ -105,9 +106,9 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                     SizedBox(height: 30.h),
                     CustomInputField(
                       icon: Icons.email,
-                      hintText: 'keroles@gmail.com',
+                      hintText: 'email_hint'.tr(),
                       keyboardType: TextInputType.emailAddress,
-                      title: 'Email Address',
+                      title: 'email_address'.tr(),
                       controller: emailController,
                       validator: AppValidations.emailValidator,
                     ),
@@ -124,7 +125,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                                     );
                               }
                             },
-                      title: isLoading ? 'Sending...' : 'Send Code',
+                      title: isLoading ? 'sending'.tr() : 'send_code'.tr(),
                       titleColor: ColorManager.white,
                       bgColor: ColorManager.primary,
                       width: double.infinity,

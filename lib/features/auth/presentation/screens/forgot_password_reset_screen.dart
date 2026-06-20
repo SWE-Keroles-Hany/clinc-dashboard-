@@ -6,6 +6,7 @@ import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_states.dar
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_cubit_provider.dart';
 import 'package:clinc_dashboard/features/auth/presentation/screens/login_screen.dart';
 import 'package:clinc_dashboard/features/auth/presentation/widgets/custom_input_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -66,7 +67,7 @@ class _ForgotPasswordResetFormState extends State<ForgotPasswordResetForm> {
       listener: (context, state) {
         if (state is ForgotPasswordResetSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Password reset successfully')),
+            SnackBar(content: Text('reset_success'.tr())),
           );
           Navigator.pushReplacementNamed(context, LoginScreen.routeName);
         }
@@ -87,7 +88,7 @@ class _ForgotPasswordResetFormState extends State<ForgotPasswordResetForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Reset Password',
+                'reset_password'.tr(),
                 style: TextStyle(
                   fontSize: 36.sp,
                   fontWeight: FontWeight.bold,
@@ -96,15 +97,15 @@ class _ForgotPasswordResetFormState extends State<ForgotPasswordResetForm> {
               ),
               SizedBox(height: 8.h),
               Text(
-                'Enter your email, code, and a new password.',
+                'enter_reset_details'.tr(),
                 style: TextStyle(fontSize: 18.sp, color: ColorManager.black),
               ),
               SizedBox(height: 30.h),
               CustomInputField(
                 icon: Icons.email,
-                hintText: 'keroles@gmail.com',
+                hintText: 'email_hint'.tr(),
                 keyboardType: TextInputType.emailAddress,
-                title: 'Email Address',
+                title: 'email_address'.tr(),
                 controller: emailController,
                 validator: AppValidations.emailValidator,
               ),
@@ -113,11 +114,11 @@ class _ForgotPasswordResetFormState extends State<ForgotPasswordResetForm> {
                 icon: Icons.confirmation_num,
                 hintText: '123456',
                 keyboardType: TextInputType.number,
-                title: 'Verification Code',
+                title: 'verification_code'.tr(),
                 controller: codeController,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Enter the verification code';
+                    return 'enter_verification_code'.tr();
                   }
                   return null;
                 },
@@ -126,8 +127,8 @@ class _ForgotPasswordResetFormState extends State<ForgotPasswordResetForm> {
               CustomInputField(
                 isPasswordField: true,
                 icon: Icons.lock,
-                hintText: '*************',
-                title: 'New Password',
+                hintText: 'password_hint'.tr(),
+                title: 'new_password'.tr(),
                 controller: newPasswordController,
                 validator: (value) =>
                     AppValidations.passwordValidator(value: value),
@@ -136,8 +137,8 @@ class _ForgotPasswordResetFormState extends State<ForgotPasswordResetForm> {
               CustomInputField(
                 isPasswordField: true,
                 icon: Icons.lock_outline,
-                hintText: '*************',
-                title: 'Confirm Password',
+                hintText: 'password_hint'.tr(),
+                title: 'confirm_password'.tr(),
                 controller: confirmPasswordController,
                 validator: (value) => AppValidations.confirmPasswordValidator(
                   value: value,
@@ -159,7 +160,7 @@ class _ForgotPasswordResetFormState extends State<ForgotPasswordResetForm> {
                           );
                         }
                       },
-                title: isLoading ? 'Resetting...' : 'Reset Password',
+                title: isLoading ? 'resetting'.tr() : 'reset_password'.tr(),
                 titleColor: ColorManager.white,
                 bgColor: ColorManager.primary,
                 width: widget.width,
