@@ -61,14 +61,14 @@ class PreferencesCard extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('dark_mode'.tr(), style: AppTextStyles.s14bold),
-                    Switch(value: false, onChanged: (_) {}),
-                  ],
-                ),
+                // const SizedBox(height: 12),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text('dark_mode'.tr(), style: AppTextStyles.s14bold),
+                //     Switch(value: false, onChanged: (_) {}),
+                //   ],
+                // ),
               ],
             );
           },

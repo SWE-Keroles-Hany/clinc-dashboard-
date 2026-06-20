@@ -16,7 +16,9 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(SettingsLoading(languageCode: state.languageCode));
     final result = await getLanguageUseCase();
     result.fold(
-      (failure) => emit(SettingsError(failure.message, languageCode: state.languageCode)),
+      (failure) => emit(
+        SettingsError(failure.message, languageCode: state.languageCode),
+      ),
       (langCode) => emit(SettingsLoaded(languageCode: langCode)),
     );
   }
@@ -25,7 +27,9 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(SettingsLoading(languageCode: state.languageCode));
     final result = await saveLanguageUseCase(langCode);
     result.fold(
-      (failure) => emit(SettingsError(failure.message, languageCode: state.languageCode)),
+      (failure) => emit(
+        SettingsError(failure.message, languageCode: state.languageCode),
+      ),
       (_) => emit(SettingsLoaded(languageCode: langCode)),
     );
   }

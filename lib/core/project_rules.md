@@ -29,7 +29,6 @@
 - Feature state files should follow the existing naming style:
   - `<feature>_cubit.dart`
   - `<feature>_states.dart`
-  - `<feature>_cubit_provider.dart`
 
 ## Data Flow
 
@@ -90,5 +89,5 @@ Screen / Widget
 
 ## Dependency Creation
 
-- `get_it` exists, but `service_locator.dart` is currently empty.
-- Existing Cubits are created manually through provider helper functions such as `createAuthCubit()`.
+- Register dependencies in `core/injection/service_locator.dart`.
+- Resolve Cubits through `getIt` and expose them to widgets with `BlocProvider`.

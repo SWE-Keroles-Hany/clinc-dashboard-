@@ -3,6 +3,7 @@ class AppointmentModel {
   final String patientName;
   final String appointmentDate;
   final String status;
+  // img url
 
   AppointmentModel({
     required this.appointmentId,

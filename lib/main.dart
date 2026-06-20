@@ -1,3 +1,4 @@
+import 'package:clinc_dashboard/core/injection/service_locator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ import 'features/auth/presentation/screens/signup_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-
+  setupServiceLocator();
   runApp(
     EasyLocalization(
       saveLocale: true,

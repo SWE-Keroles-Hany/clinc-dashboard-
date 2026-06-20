@@ -1,9 +1,9 @@
+import 'package:clinc_dashboard/core/injection/service_locator.dart';
 import 'package:clinc_dashboard/core/helper/validations/app_validations.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:clinc_dashboard/core/widgets/custom_button.dart';
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_states.dart';
-import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_cubit_provider.dart';
 import 'package:clinc_dashboard/features/auth/presentation/screens/forgot_password_reset_screen.dart';
 import 'package:clinc_dashboard/features/auth/presentation/widgets/custom_input_field.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -21,7 +21,7 @@ class ForgotPasswordVerifyScreen extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width;
 
     return BlocProvider(
-      create: (_) => createAuthCubit(),
+      create: (_) => getIt<AuthCubit>(),
       child: Scaffold(
         backgroundColor: ColorManager.white,
         body: SafeArea(

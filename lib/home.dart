@@ -1,14 +1,15 @@
+import 'package:clinc_dashboard/core/injection/service_locator.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:clinc_dashboard/core/utils/ui_utils.dart';
 import 'package:clinc_dashboard/features/appointments_tab/presentation/appointments_tab.dart';
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_states.dart';
 import 'package:clinc_dashboard/features/auth/presentation/screens/login_screen.dart';
-import 'package:clinc_dashboard/features/dashboard_tab/presentation/cubit/dashboard_cubit_provider.dart';
+import 'package:clinc_dashboard/features/dashboard_tab/presentation/cubit/dashboard_cubit.dart';
 import 'package:clinc_dashboard/features/dashboard_tab/presentation/dashboard_tab.dart';
-import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_cubit_provider.dart';
+import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_cubit.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/patient_tab.dart';
-import 'package:clinc_dashboard/features/settings_tab/presentation/cubit/settings_cubit_provider.dart';
+import 'package:clinc_dashboard/features/settings_tab/presentation/cubit/settings_cubit.dart';
 import 'package:clinc_dashboard/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,16 +33,16 @@ class _HomeState extends State<Home> {
     super.initState();
     _tabs = [
       BlocProvider(
-        create: (_) => createDashboardCubit(),
+        create: (_) => getIt<DashboardCubit>(),
         child: const DashboardTab(),
       ),
       BlocProvider(
-        create: (_) => createPatientCubit(),
+        create: (_) => getIt<PatientCubit>(),
         child: const PatientTab(),
       ),
       AppointmentsTab(),
       BlocProvider(
-        create: (_) => createSettingsCubit(),
+        create: (_) => getIt<SettingsCubit>(),
         child: const SettingsTab(),
       ),
     ];
