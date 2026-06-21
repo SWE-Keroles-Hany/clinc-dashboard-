@@ -27,10 +27,7 @@ class PatientScreenHeader extends StatelessWidget {
             width: 100,
             height: 100,
             color: Colors.grey[300],
-            child: CachedNetworkImage(
-              imageUrl: 'https://via.placeholder.com/100',
-              fit: BoxFit.cover,
-            ),
+            child: Image.network("src"),
           ),
         ),
         const SizedBox(width: 24),
