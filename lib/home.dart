@@ -15,6 +15,7 @@ import 'package:clinc_dashboard/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'features/patient_tab/presentation/patient_profile_screen.dart';
 import 'features/settings_tab/presentation/settings_tab.dart';
 
 class Home extends StatefulWidget {

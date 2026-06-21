@@ -32,4 +32,30 @@ class AppTextStyles {
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
+  //! patient theme text styles
+  static TextStyle get heading1 => const TextStyle(
+    fontSize: 28,
+    fontWeight: FontWeight.bold,
+    color: ColorManager.textDark,
+  );
+  static TextStyle get heading2 => const TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: ColorManager.textDark,
+  );
+  static TextStyle get heading3 => const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: ColorManager.textDark,
+  );
+  static TextStyle get bodyText =>
+      const TextStyle(fontSize: 14, color: ColorManager.textDark, height: 1.5);
+  static TextStyle get subtitleText =>
+      const TextStyle(fontSize: 14, color: ColorManager.textLight);
+  static TextStyle get labelText => const TextStyle(
+    fontSize: 11,
+    fontWeight: FontWeight.w600,
+    color: ColorManager.textLight,
+    letterSpacing: 0.5,
+  );
 }
