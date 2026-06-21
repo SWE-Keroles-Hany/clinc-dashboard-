@@ -47,22 +47,12 @@ class DashboardAPIDataSource implements DashboardRemoteDataSource {
     required bool todayOnly,
   }) async {
     try {
-      final response = await dioServices.get(
+      final List<dynamic> response = await dioServices.get(
         endPoint: ApiEndPoints.appointments,
         queryParams: {'todayOnly': true},
       );
 
-      final List<dynamic> rawList = response is List
-          ? response
-          : (response['data'] ?? response['appointments'] ?? []);
-
-      return rawList
-          .map(
-            (item) => AppointmentModel.fromJson(
-              Map<String, dynamic>.from(item as Map),
-            ),
-          )
-          .toList();
+      return response.map((item) => AppointmentModel.fromJson(item)).toList();
     } on Failure catch (error) {
       throw Failure(message: error.message);
     } catch (e) {

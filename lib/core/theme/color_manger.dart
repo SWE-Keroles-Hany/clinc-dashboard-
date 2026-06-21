@@ -18,4 +18,15 @@ class ColorManager {
   static const Color confirmedBg = Color(0xffFEF3C7);
   static const Color errordBg = Color(0xffFEF2F2);
   static const Color pendingBg = Color(0xffEFF6FF);
+  //! patient theme colors
+  static const Color background = Color(0xFFF7F9FC);
+  static const Color surface = Colors.white;
+  static const Color primaryBlue = Color(0xFF1E65F3);
+  static const Color textDark = Color(0xFF1A1D21);
+  static const Color textLight = Color(0xFF6B7280);
+  static const Color border = Color(0xFFE5E7EB);
+  static const Color tagChronicBg = Color(0xFFE0F2FE);
+  static const Color tagChronicText = Color(0xFF0284C7);
+  static const Color tagAcuteBg = Color(0xFFFFE4E6);
+  static const Color tagAcuteText = Color(0xFFE11D48);
 }

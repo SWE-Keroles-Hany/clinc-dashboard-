@@ -1,4 +1,5 @@
 import 'package:clinc_dashboard/features/patient_tab/domain/entities/patient_entity.dart';
+import 'package:clinc_dashboard/features/patient_tab/presentation/patient_profile_screen.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/widgets/patient_row_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -18,6 +19,7 @@ class PatientList extends StatelessWidget {
         return PatientRowInfo(
           patient: patient,
           onViewPressed: () {
+            Navigator.pushNamed(context, PatientProfileScreen.routeName);
             //! go to user profile (data - medical history) ;
           },
         );
