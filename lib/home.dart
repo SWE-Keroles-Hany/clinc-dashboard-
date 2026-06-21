@@ -2,6 +2,7 @@ import 'package:clinc_dashboard/core/injection/service_locator.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:clinc_dashboard/core/utils/ui_utils.dart';
 import 'package:clinc_dashboard/features/appointments_tab/presentation/appointments_tab.dart';
+import 'package:clinc_dashboard/features/appointments_tab/presentation/cubit/appointment_cubit.dart';
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:clinc_dashboard/features/auth/presentation/cubit/auth_states.dart';
 import 'package:clinc_dashboard/features/auth/presentation/screens/login_screen.dart';
@@ -40,7 +41,10 @@ class _HomeState extends State<Home> {
         create: (_) => getIt<PatientCubit>(),
         child: const PatientTab(),
       ),
-      AppointmentsTab(),
+      BlocProvider(
+        create: (_) => getIt<AppointmentCubit>(),
+        child: const AppointmentsTab(),
+      ),
       BlocProvider(
         create: (_) => getIt<SettingsCubit>(),
         child: const SettingsTab(),

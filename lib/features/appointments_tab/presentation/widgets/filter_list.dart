@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 class FilterList extends StatefulWidget {
-  const FilterList({super.key});
+  final ValueChanged<int?> onStatusSelected;
+
+  const FilterList({super.key, required this.onStatusSelected});
 
   @override
   State<FilterList> createState() => _FilterListState();
@@ -13,6 +15,7 @@ class FilterList extends StatefulWidget {
 
 class _FilterListState extends State<FilterList> {
   final list = ['all', 'pending', 'completed', 'cancelled', 'confirmed'];
+  final statusValues = <int?>[null, 1, 3, 4, 2];
 
   int selectedIndex = 0;
 
@@ -26,6 +29,7 @@ class _FilterListState extends State<FilterList> {
         onTap: () {
           selectedIndex = index;
           setState(() {});
+          widget.onStatusSelected(statusValues[index]);
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 30.w),

@@ -20,4 +20,4 @@ auth :
 - translate 
 - save singing ?
 ========
- -add data and text 
+ -add data and test every thing  

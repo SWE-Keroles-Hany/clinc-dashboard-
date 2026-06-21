@@ -8,12 +8,14 @@ import 'package:intl/intl.dart';
 
 class AppointmentCard extends StatefulWidget {
   final AppointmentEntity appointment;
-  final Function(String newStatus)? onStatusChanged;
+  final Function(int newStatus)? onStatusChanged;
+  final bool isUpdating;
 
   const AppointmentCard({
     super.key,
     required this.appointment,
     this.onStatusChanged,
+    this.isUpdating = false,
   });
 
   @override
@@ -29,12 +31,38 @@ class _AppointmentCardState extends State<AppointmentCard> {
     _currentStatus = widget.appointment.status;
   }
 
+  @override
+  void didUpdateWidget(covariant AppointmentCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.appointment.status != widget.appointment.status ||
+        oldWidget.appointment.appointmentId !=
+            widget.appointment.appointmentId) {
+      _currentStatus = widget.appointment.status;
+    }
+  }
+
   static const List<String> _allStatuses = [
     'Pending',
     'Confirmed',
     'Completed',
     'Cancelled',
   ];
+
+  int _statusValue(String status) {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return 1;
+      case 'confirmed':
+        return 2;
+      case 'completed':
+        return 3;
+      case 'cancelled':
+      case 'canceled':
+        return 4;
+      default:
+        return 1;
+    }
+  }
 
   Color _statusColor(String status) {
     switch (status.toLowerCase()) {
@@ -87,7 +115,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
   String _formatTime(String iso) {
     try {
       final dt = DateTime.parse(iso);
-      return DateFormat('EEE, dd MMM • hh:mm a').format(dt);
+      return DateFormat('EEE, dd MMM - hh:mm a').format(dt);
     } catch (_) {
       return iso;
     }
@@ -116,9 +144,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () {
-                          setState(() => _currentStatus = status);
-                          //! >>>
-                          //        widget.onStatusChanged?.call(status);
+                          widget.onStatusChanged?.call(_statusValue(status));
                           Navigator.pop(context);
                         },
                         borderRadius: BorderRadius.circular(8),
@@ -237,8 +263,14 @@ class _AppointmentCardState extends State<AppointmentCard> {
               ),
             ),
             IconButton(
-              onPressed: _showStatusDialog,
-              icon: const Icon(Icons.edit),
+              onPressed: widget.isUpdating ? null : _showStatusDialog,
+              icon: widget.isUpdating
+                  ? SizedBox(
+                      width: 18.r,
+                      height: 18.r,
+                      child: const CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Icon(Icons.edit),
               color: ColorManager.primary,
             ),
           ],

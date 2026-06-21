@@ -1,4 +1,9 @@
 import 'package:clinc_dashboard/core/network/dio_services.dart';
+import 'package:clinc_dashboard/features/appointments_tab/data/data_source/appointment_api_data_source.dart';
+import 'package:clinc_dashboard/features/appointments_tab/domain/repo/appointment_repo_imp.dart';
+import 'package:clinc_dashboard/features/appointments_tab/domain/use_cases/get_appointments.dart';
+import 'package:clinc_dashboard/features/appointments_tab/domain/use_cases/update_appointment_type.dart';
+import 'package:clinc_dashboard/features/appointments_tab/presentation/cubit/appointment_cubit.dart';
 import 'package:clinc_dashboard/features/auth/data/data_source/auth_api_data_source.dart';
 import 'package:clinc_dashboard/features/auth/domain/repo/auth_repo_imp.dart';
 import 'package:clinc_dashboard/features/auth/domain/use_cases/forgot_password_reset.dart';
@@ -117,6 +122,30 @@ void setupServiceLocator() {
     () => PatientCubit(
       getTotalPatientsNumberUseCase: getIt<GetTotalPatientsNumberUseCase>(),
       getPatientsUseCase: getIt<GetPatientsUseCase>(),
+    ),
+  );
+
+  // Appointment datasource and repository
+  getIt.registerSingleton<AppointmentAPIDataSource>(
+    AppointmentAPIDataSource(getIt<DioServices>()),
+  );
+  getIt.registerSingleton<AppointmentRepositoryImpl>(
+    AppointmentRepositoryImpl(getIt<AppointmentAPIDataSource>()),
+  );
+
+  // Appointment usecases
+  getIt.registerSingleton<GetAppointmentsUseCase>(
+    GetAppointmentsUseCase(getIt<AppointmentRepositoryImpl>()),
+  );
+  getIt.registerSingleton<UpdateAppointmentTypeUseCase>(
+    UpdateAppointmentTypeUseCase(getIt<AppointmentRepositoryImpl>()),
+  );
+
+  // Appointment cubit
+  getIt.registerFactory<AppointmentCubit>(
+    () => AppointmentCubit(
+      getAppointmentsUseCase: getIt<GetAppointmentsUseCase>(),
+      updateAppointmentTypeUseCase: getIt<UpdateAppointmentTypeUseCase>(),
     ),
   );
 
