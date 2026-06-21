@@ -9,5 +9,7 @@ class ApiEndPoints {
   static const String dashboardStats = "Doctor/dashboard-stats";
   static const String appointments = "Doctor/appointments";
   static const String updateAppointmentStatus = "Doctor/update-status";
+  static const String doctorProfile = "Doctor/profile";
+  static const String updateDoctorImage = "Doctor/update-image";
   static const String myPatients = "Doctor/my-patients";
 }

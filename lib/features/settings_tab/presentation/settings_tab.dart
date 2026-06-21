@@ -1,5 +1,6 @@
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
+import 'package:clinc_dashboard/features/auth/data/models/doctor_model.dart';
 import 'package:clinc_dashboard/features/settings_tab/presentation/clinic_information_card.dart';
 import 'package:clinc_dashboard/features/settings_tab/presentation/account_settings_card.dart';
 import 'package:clinc_dashboard/features/settings_tab/presentation/preferences_card.dart';
@@ -20,41 +21,42 @@ class SettingsTab extends StatefulWidget {
 class _SettingsTabState extends State<SettingsTab> {
   bool _isEditing = false;
 
-  late final TextEditingController clinicNameController;
+  late final TextEditingController specialtyController;
   late final TextEditingController phoneController;
   late final TextEditingController emailController;
-  late final TextEditingController websiteController;
+  late final TextEditingController yearsOfExperienceController;
   late final TextEditingController addressController;
+  late final TextEditingController bioController;
   late final TextEditingController profileNameController;
   late final TextEditingController personalEmailController;
+  DoctorModel? _doctor;
+  String? _selectedImagePath;
 
   @override
   void initState() {
-    context.read<SettingsCubit>().loadLanguage();
-
     super.initState();
-    clinicNameController = TextEditingController(
-      text: 'MedCore General Hospital',
-    );
-    phoneController = TextEditingController(text: '+1 (555) 902-1000');
-    emailController = TextEditingController(text: 'admin@medcore.hospital');
-    websiteController = TextEditingController(text: 'https://medcore.hospital');
-    addressController = TextEditingController(
-      text: '1200 Healthcare Way, Medical District, San Francisco, CA 94103',
-    );
-    profileNameController = TextEditingController(text: 'Dr. Jonathan Smith');
-    personalEmailController = TextEditingController(
-      text: 'j.smith@medcore.hospital',
-    );
+    specialtyController = TextEditingController();
+    phoneController = TextEditingController();
+    emailController = TextEditingController();
+    yearsOfExperienceController = TextEditingController();
+    addressController = TextEditingController();
+    bioController = TextEditingController();
+    profileNameController = TextEditingController();
+    personalEmailController = TextEditingController();
+
+    final cubit = context.read<SettingsCubit>();
+    cubit.loadLanguage();
+    cubit.getProfile();
   }
 
   @override
   void dispose() {
-    clinicNameController.dispose();
+    specialtyController.dispose();
     phoneController.dispose();
     emailController.dispose();
-    websiteController.dispose();
+    yearsOfExperienceController.dispose();
     addressController.dispose();
+    bioController.dispose();
     profileNameController.dispose();
     personalEmailController.dispose();
     super.dispose();
@@ -76,13 +78,45 @@ class _SettingsTabState extends State<SettingsTab> {
     });
   }
 
+  void _evictProfileImage(String? imageUrl) {
+    if (imageUrl == null || imageUrl.isEmpty) return;
+    NetworkImage(imageUrl).evict();
+  }
+
   void _saveChanges() {
-    setState(() {
-      _isEditing = false;
-    });
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('settings_saved'.tr())));
+    final currentDoctor = _doctor;
+    if (currentDoctor == null) return;
+
+    context.read<SettingsCubit>().updateProfile(
+      doctor: DoctorModel(
+        fullName: profileNameController.text.trim(),
+        email: currentDoctor.email,
+        phoneNumber: phoneController.text.trim(),
+        specialty: specialtyController.text.trim(),
+        yearsOfExperience:
+            int.tryParse(yearsOfExperienceController.text.trim()) ?? 0,
+        clinicAddress: addressController.text.trim(),
+        bio: bioController.text.trim(),
+        profilePictureUrl: currentDoctor.profilePictureUrl,
+        password: currentDoctor.password,
+        gender: currentDoctor.gender,
+      ),
+      profileImagePath: _selectedImagePath,
+    );
+  }
+
+  void _bindProfile(DoctorModel doctor) {
+    _doctor = doctor;
+    profileNameController.text = doctor.fullName;
+    personalEmailController.text = doctor.email;
+    emailController.text = doctor.email;
+    phoneController.text = doctor.phoneNumber;
+    specialtyController.text = doctor.specialty;
+    yearsOfExperienceController.text = (doctor.yearsOfExperience ?? 0)
+        .toString();
+    addressController.text = doctor.clinicAddress ?? '';
+    bioController.text = doctor.bio ?? '';
+    _selectedImagePath = null;
   }
 
   @override
@@ -91,7 +125,7 @@ class _SettingsTabState extends State<SettingsTab> {
       color: ColorManager.kGray500,
     );
 
-    return BlocListener<SettingsCubit, SettingsState>(
+    return BlocConsumer<SettingsCubit, SettingsState>(
       listener: (context, state) {
         if (state is SettingsLoaded) {
           final currentLocale = EasyLocalization.of(
@@ -102,103 +136,131 @@ class _SettingsTabState extends State<SettingsTab> {
           }
           setState(() {});
         }
+        if (state is SettingsProfileLoaded && state.doctor != null) {
+          _bindProfile(state.doctor!);
+        }
+        if (state is SettingsProfileUpdated) {
+          setState(() {
+            _isEditing = false;
+            if (state.doctor != null) {
+              _doctor = state.doctor;
+            }
+          });
+          _evictProfileImage(state.doctor?.profilePictureUrl);
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('settings_saved'.tr())));
+        }
+        if (state is SettingsProfileError) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
+        }
       },
-      child: Container(
-        color: ColorManager.backgroud,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: Column(
-          children: [
-            // Top row with title and save button
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'system_settings'.tr(),
-                        style: AppTextStyles.s30bold,
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        'manage_clinic_preferences'.tr(),
-                        style: AppTextStyles.s14bold.copyWith(
-                          color: ColorManager.kGray500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ElevatedButton.icon(
-                  onPressed: _saveChanges,
-                  icon: const Icon(Icons.save),
-                  label: Text('save_changes'.tr()),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorManager.primary,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 18,
-                      vertical: 14,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
+      builder: (context, state) {
+        final isSaving = state is SettingsProfileUpdating;
 
-            // Main content two-column layout
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        return Container(
+          color: ColorManager.backgroud,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: Column(
+            children: [
+              // Top row with title and save button
+              Row(
                 children: [
-                  // Left main column
                   Expanded(
-                    flex: 3,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ClinicInformationCard(
-                          clinicNameController: clinicNameController,
-                          phoneController: phoneController,
-                          emailController: emailController,
-                          websiteController: websiteController,
-                          addressController: addressController,
-                          isEditing: _isEditing,
-                          onToggleEdit: _toggleEdit,
-                          inputDecoration: _inputDecoration(),
-                          labelStyle: labelStyle,
+                        Text(
+                          'system_settings'.tr(),
+                          style: AppTextStyles.s30bold,
                         ),
-
-                        const SizedBox(height: 16),
-
-                        AccountSettingsCard(
-                          profileNameController: profileNameController,
-                          personalEmailController: personalEmailController,
-                          isEditing: _isEditing,
-                          inputDecoration: _inputDecoration(),
-                          labelStyle: labelStyle,
+                        const SizedBox(height: 6),
+                        Text(
+                          'manage_clinic_preferences'.tr(),
+                          style: AppTextStyles.s14bold.copyWith(
+                            color: ColorManager.kGray500,
+                          ),
                         ),
                       ],
                     ),
                   ),
-
-                  const SizedBox(width: 20),
-
-                  // Right sidebar
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        PreferencesCard(labelStyle: labelStyle),
-                        const SizedBox(height: 12),
-                        const NeedHelpCard(),
-                      ],
+                  ElevatedButton.icon(
+                    onPressed: isSaving ? null : _saveChanges,
+                    icon: const Icon(Icons.save),
+                    label: Text(
+                      isSaving ? 'loading'.tr() : 'save_changes'.tr(),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorManager.primary,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 14,
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-      ),
+              const SizedBox(height: 20),
+
+              // Main content two-column layout
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Left main column
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        children: [
+                          ClinicInformationCard(
+                            specialtyController: specialtyController,
+                            phoneController: phoneController,
+                            emailController: emailController,
+                            yearsOfExperienceController:
+                                yearsOfExperienceController,
+                            addressController: addressController,
+                            bioController: bioController,
+                            isEditing: _isEditing,
+                            onToggleEdit: _toggleEdit,
+                            inputDecoration: _inputDecoration(),
+                            labelStyle: labelStyle,
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          AccountSettingsCard(
+                            profileNameController: profileNameController,
+                            personalEmailController: personalEmailController,
+                            isEditing: _isEditing,
+                            inputDecoration: _inputDecoration(),
+                            labelStyle: labelStyle,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(width: 20),
+                    // Right sidebar
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          PreferencesCard(labelStyle: labelStyle),
+
+                          const SizedBox(height: 12),
+                          const NeedHelpCard(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

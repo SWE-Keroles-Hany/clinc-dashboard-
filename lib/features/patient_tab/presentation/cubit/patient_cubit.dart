@@ -15,9 +15,11 @@ class PatientCubit extends Cubit<PatientState> {
   }) : super(PatientInitial());
   int pageIndex = 1;
 
-  Future<void> getPatients({String? name}) async {
+  Future<void> getPatients({bool inSearch = false, String? name}) async {
     emit(PatientLoading());
-
+    if (inSearch) {
+      pageIndex = 0;
+    }
     final result = await getPatientsUseCase(name: name, pageIndex: pageIndex);
 
     result.fold((failure) => emit(PatientError(message: failure.message)), (

@@ -12,7 +12,6 @@ class DioServices implements APIServices {
     dio.options.baseUrl = ApiEndPoints.baseURL;
     dio.options.headers = {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
     };
     dio.interceptors.add(DioInterceptors());
   }

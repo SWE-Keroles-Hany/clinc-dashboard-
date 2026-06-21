@@ -24,9 +24,13 @@ import 'package:clinc_dashboard/features/patient_tab/domain/use_cases/get_patien
 import 'package:clinc_dashboard/features/patient_tab/domain/use_cases/get_total_patients_number.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_cubit.dart';
 import 'package:clinc_dashboard/features/settings_tab/data/datasources/settings_local_datasource.dart';
+import 'package:clinc_dashboard/features/settings_tab/data/datasources/settings_api_datasource.dart';
 import 'package:clinc_dashboard/features/settings_tab/data/repositories/settings_repository_impl.dart';
+import 'package:clinc_dashboard/features/settings_tab/domain/usecases/get_profile_usecase.dart';
 import 'package:clinc_dashboard/features/settings_tab/domain/usecases/get_language_usecase.dart';
 import 'package:clinc_dashboard/features/settings_tab/domain/usecases/save_language_usecase.dart';
+import 'package:clinc_dashboard/features/settings_tab/domain/usecases/update_profile_image_usecase.dart';
+import 'package:clinc_dashboard/features/settings_tab/domain/usecases/update_profile_usecase.dart';
 import 'package:clinc_dashboard/features/settings_tab/presentation/cubit/settings_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -42,8 +46,14 @@ void setupServiceLocator() {
   getIt.registerSingleton<SettingsLocalDataSource>(
     SettingsLocalDataSourceImpl(),
   );
+  getIt.registerSingleton<SettingsAPIDataSource>(
+    SettingsAPIDataSource(getIt<DioServices>()),
+  );
   getIt.registerSingleton<SettingsRepositoryImpl>(
-    SettingsRepositoryImpl(localDataSource: getIt<SettingsLocalDataSource>()),
+    SettingsRepositoryImpl(
+      localDataSource: getIt<SettingsLocalDataSource>(),
+      remoteDataSource: getIt<SettingsAPIDataSource>(),
+    ),
   );
 
   // Settings usecases
@@ -53,12 +63,24 @@ void setupServiceLocator() {
   getIt.registerSingleton<SaveLanguageUseCase>(
     SaveLanguageUseCase(getIt<SettingsRepositoryImpl>()),
   );
+  getIt.registerSingleton<GetProfileUseCase>(
+    GetProfileUseCase(getIt<SettingsRepositoryImpl>()),
+  );
+  getIt.registerSingleton<UpdateProfileUseCase>(
+    UpdateProfileUseCase(getIt<SettingsRepositoryImpl>()),
+  );
+  getIt.registerSingleton<UpdateProfileImageUseCase>(
+    UpdateProfileImageUseCase(getIt<SettingsRepositoryImpl>()),
+  );
 
   // Settings cubit
   getIt.registerFactory<SettingsCubit>(
     () => SettingsCubit(
       getLanguageUseCase: getIt<GetLanguageUseCase>(),
       saveLanguageUseCase: getIt<SaveLanguageUseCase>(),
+      getProfileUseCase: getIt<GetProfileUseCase>(),
+      updateProfileUseCase: getIt<UpdateProfileUseCase>(),
+      updateProfileImageUseCase: getIt<UpdateProfileImageUseCase>(),
     ),
   );
 

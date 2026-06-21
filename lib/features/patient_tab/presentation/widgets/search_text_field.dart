@@ -9,13 +9,15 @@ class SearchTextField extends StatelessWidget {
     super.key,
     required TextEditingController searchController,
     this.onChanged,
+    this.onTap,
   }) : _searchController = searchController;
-
+  final Function()? onTap;
   final TextEditingController _searchController;
   final Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onTap: onTap,
       controller: _searchController,
       onChanged: onChanged,
       decoration: InputDecoration(

@@ -13,6 +13,10 @@ class DioInterceptors extends Interceptor {
         await SharedPreferences.getInstance();
     final token = sharedPreferences.getString("token");
     log("token  $token");
+    if (options.data is FormData) {
+      options.headers.remove(Headers.contentTypeHeader);
+      options.contentType = null;
+    }
     options.headers['Authorization'] = 'Bearer $token';
     super.onRequest(options, handler);
   }

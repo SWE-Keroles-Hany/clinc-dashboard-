@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_cubit.dart';
@@ -106,9 +104,11 @@ class _PatientTabState extends State<PatientTab> {
                             border: Border.all(color: ColorManager.lightGray),
                           ),
                           child: SearchTextField(
+                            onTap: () {},
                             onChanged: (p0) {
                               context.read<PatientCubit>().getPatients(
                                 name: _searchController.text,
+                                inSearch: true,
                               );
                               context
                                   .read<PatientCubit>()
@@ -191,99 +191,3 @@ class _PatientTabState extends State<PatientTab> {
     );
   }
 }
-
-/*
-
-Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //! Directory Card Controls
-                          Row(
-                            children: [
-                              Text(
-                                "Patient Directory",
-                                style: AppTextStyles.s20bold.copyWith(
-                                  color: ColorManager.black,
-                                ),
-                              ),
-                              SizedBox(width: 15.w),
-                              TotalPatients(patients: patients),
-                              const Spacer(),
-                              // Search Box
-                              Container(
-                                width: 500.w,
-                                height: 50.h,
-                                decoration: BoxDecoration(
-                                  color: ColorManager.lightGray.withValues(
-                                    alpha: 0.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  border: Border.all(
-                                    color: ColorManager.lightGray,
-                                  ),
-                                ),
-                                child: SearchTextField(
-                                  onChanged: (p0) {
-                                    context.read<PatientCubit>().getPatients();
-                                    //! search
-                                  },
-                                  searchController: _searchController,
-                                ),
-                              ),
-
-                              // Download button
-                            ],
-                          ),
-                          SizedBox(height: 20.h),
-                          // Table Headers
-                          const PatientMainRowLabels(),
-                          SizedBox(height: 12.h),
-                          //! Patients
-                          Expanded(
-                            child: patients.isEmpty
-                                ? Center(
-                                    child: Text(
-                                      'no_patients_found'.tr(),
-                                      style: AppTextStyles.s16bold.copyWith(
-                                        color: ColorManager.kGray500,
-                                      ),
-                                    ),
-                                  )
-                                : PatientList(filteredPatients: patients),
-                          ),
-                          SizedBox(height: 16.h),
-                          //! Pagination Control Row
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Showing 1-${patients.length} of ${patients.length} patients",
-                                style: AppTextStyles.s14bold.copyWith(
-                                  fontSize: 12.sp,
-                                  color: ColorManager.kGray500,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.chevron_left),
-                                    color: ColorManager.kGray500,
-                                    onPressed:
-                                        () {}, // Disabled in mock pagination
-                                  ),
-                                  //! pagaintio , numberss (1..100)
-                                  IconButton(
-                                    icon: const Icon(Icons.chevron_right),
-                                    color: ColorManager.kGray500,
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      );
-                  
-
-*/

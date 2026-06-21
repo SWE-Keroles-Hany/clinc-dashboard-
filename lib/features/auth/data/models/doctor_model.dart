@@ -23,6 +23,35 @@ class DoctorModel {
     required this.gender,
   });
 
+  factory DoctorModel.fromJson(Map<String, dynamic> json) {
+    return DoctorModel(
+      fullName:
+          json['fullName']?.toString() ?? json['FullName']?.toString() ?? '',
+      email: json['email']?.toString() ?? json['Email']?.toString() ?? '',
+      phoneNumber:
+          json['phoneNumber']?.toString() ??
+          json['PhoneNumber']?.toString() ??
+          '',
+      specialty:
+          json['specialty']?.toString() ?? json['Specialty']?.toString() ?? '',
+      yearsOfExperience: _toInt(
+        json['yearsOfExperience'] ?? json['YearsOfExperience'],
+      ),
+      clinicAddress:
+          json['clinicAddress']?.toString() ??
+          json['ClinicAddress']?.toString(),
+      bio: json['bio']?.toString() ?? json['Bio']?.toString(),
+      profilePictureUrl: _firstNotBlankString([
+        json['profilePictureUrl'],
+        json['profilePicture'],
+        json['ProfilePicture'],
+      ]),
+      password:
+          json['password']?.toString() ?? json['Password']?.toString() ?? '',
+      gender: json['gender']?.toString() ?? json['Gender']?.toString() ?? '',
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'FullName': fullName,
@@ -35,5 +64,32 @@ class DoctorModel {
       'Bio': bio,
       'ProfilePicture': profilePictureUrl,
     };
+  }
+
+  Map<String, dynamic> toUpdateProfileJson() {
+    return {
+      'fullName': fullName,
+      'specialty': specialty,
+      'yearsOfExperience': yearsOfExperience ?? 0,
+      'clinicAddress': clinicAddress ?? '',
+      'bio': bio ?? '',
+      'phoneNumber': phoneNumber,
+    };
+  }
+
+  static int? _toInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    return int.tryParse(value.toString());
+  }
+
+  static String? _firstNotBlankString(List<dynamic> values) {
+    for (final value in values) {
+      final text = value?.toString().trim();
+      if (text != null && text.isNotEmpty && text.toLowerCase() != 'null') {
+        return text;
+      }
+    }
+    return null;
   }
 }

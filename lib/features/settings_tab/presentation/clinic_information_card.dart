@@ -6,22 +6,24 @@ import 'package:flutter/material.dart';
 class ClinicInformationCard extends StatelessWidget {
   const ClinicInformationCard({
     super.key,
-    required this.clinicNameController,
+    required this.specialtyController,
     required this.phoneController,
     required this.emailController,
-    required this.websiteController,
+    required this.yearsOfExperienceController,
     required this.addressController,
+    required this.bioController,
     required this.isEditing,
     required this.onToggleEdit,
     required this.inputDecoration,
     required this.labelStyle,
   });
 
-  final TextEditingController clinicNameController;
+  final TextEditingController specialtyController;
   final TextEditingController phoneController;
   final TextEditingController emailController;
-  final TextEditingController websiteController;
+  final TextEditingController yearsOfExperienceController;
   final TextEditingController addressController;
+  final TextEditingController bioController;
   final bool isEditing;
   final VoidCallback onToggleEdit;
   final InputDecoration inputDecoration;
@@ -69,10 +71,10 @@ class ClinicInformationCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('clinic_name'.tr(), style: labelStyle),
+                      Text('specialty'.tr(), style: labelStyle),
                       const SizedBox(height: 6),
                       TextFormField(
-                        controller: clinicNameController,
+                        controller: specialtyController,
                         readOnly: !isEditing,
                         decoration: inputDecoration,
                       ),
@@ -108,7 +110,7 @@ class ClinicInformationCard extends StatelessWidget {
                       const SizedBox(height: 6),
                       TextFormField(
                         controller: emailController,
-                        readOnly: !isEditing,
+                        readOnly: true,
                         decoration: inputDecoration,
                       ),
                     ],
@@ -119,11 +121,12 @@ class ClinicInformationCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('website'.tr(), style: labelStyle),
+                      Text('years_of_experience'.tr(), style: labelStyle),
                       const SizedBox(height: 6),
                       TextFormField(
-                        controller: websiteController,
+                        controller: yearsOfExperienceController,
                         readOnly: !isEditing,
+                        keyboardType: TextInputType.number,
                         decoration: inputDecoration,
                       ),
                     ],
@@ -136,6 +139,15 @@ class ClinicInformationCard extends StatelessWidget {
             const SizedBox(height: 6),
             TextFormField(
               controller: addressController,
+              readOnly: !isEditing,
+              maxLines: 3,
+              decoration: inputDecoration,
+            ),
+            const SizedBox(height: 12),
+            Text('bio'.tr(), style: labelStyle),
+            const SizedBox(height: 6),
+            TextFormField(
+              controller: bioController,
               readOnly: !isEditing,
               maxLines: 3,
               decoration: inputDecoration,

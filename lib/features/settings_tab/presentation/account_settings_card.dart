@@ -70,7 +70,7 @@ class AccountSettingsCard extends StatelessWidget {
                       const SizedBox(height: 6),
                       TextFormField(
                         controller: personalEmailController,
-                        readOnly: !isEditing,
+                        readOnly: true,
                         decoration: inputDecoration,
                       ),
                     ],
