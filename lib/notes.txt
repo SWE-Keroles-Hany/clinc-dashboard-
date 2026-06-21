@@ -10,9 +10,14 @@
 3) appointment 
 - api (filter , update medical history , get appointments)
 
+
 4) settings 
 - api  ( get , update )
-- dark/light - language 
-==
-1- save singing ?
-2- implement getIt
+- dark/light - language
+
+
+auth : 
+- translate 
+- save singing ?
+========
+ -add data and text 

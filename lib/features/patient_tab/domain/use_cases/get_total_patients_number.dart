@@ -1,19 +1,15 @@
 import 'package:clinc_dashboard/core/error/failure.dart';
 import 'package:clinc_dashboard/features/patient_tab/data/repo/patient_repo.dart';
-import 'package:clinc_dashboard/features/patient_tab/domain/entities/patient_entity.dart';
 import 'package:dartz/dartz.dart';
 
-class GetPatientsUseCase {
+class GetTotalPatientsNumberUseCase {
   final PatientRepository repository;
 
-  GetPatientsUseCase(this.repository);
+  GetTotalPatientsNumberUseCase(this.repository);
 
-  Future<Either<Failure, List<PatientEntity>>> call({
-    String? name,
-    int? pageIndex,
-  }) async {
+  Future<Either<Failure, int>> call({required String? name}) async {
     try {
-      return await repository.getPatients(name: name, pageIndex: pageIndex);
+      return await repository.getTotalPatientsNumber(name: name);
     } on Failure catch (error) {
       return Left(Failure(message: error.message));
     } catch (e) {

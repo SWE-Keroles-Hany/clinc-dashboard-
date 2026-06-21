@@ -3,5 +3,9 @@ import 'package:clinc_dashboard/features/patient_tab/domain/entities/patient_ent
 import 'package:dartz/dartz.dart';
 
 abstract class PatientRepository {
-  Future<Either<Failure, List<PatientEntity>>> getPatients();
+  Future<Either<Failure, List<PatientEntity>>> getPatients({
+    String? name,
+    int? pageIndex,
+  });
+  Future<Either<Failure, int>> getTotalPatientsNumber({required String? name});
 }

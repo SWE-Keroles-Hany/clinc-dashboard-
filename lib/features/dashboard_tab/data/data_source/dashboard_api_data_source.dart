@@ -49,7 +49,7 @@ class DashboardAPIDataSource implements DashboardRemoteDataSource {
     try {
       final response = await dioServices.get(
         endPoint: ApiEndPoints.appointments,
-        queryParams: {'todayOnly': todayOnly},
+        queryParams: {'todayOnly': true},
       );
 
       final List<dynamic> rawList = response is List

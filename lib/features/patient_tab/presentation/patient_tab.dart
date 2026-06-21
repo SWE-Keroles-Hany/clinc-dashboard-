@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_cubit.dart';
@@ -19,12 +21,17 @@ class PatientTab extends StatefulWidget {
 }
 
 class _PatientTabState extends State<PatientTab> {
+  int pageIndex = 1;
+  int patientsListLength = 10;
   final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    context.read<PatientCubit>().getPatients();
+    context.read<PatientCubit>().getPatients(name: _searchController.text);
+    context.read<PatientCubit>().getTotalPatientsNumber(
+      name: _searchController.text,
+    );
   }
 
   @override
@@ -75,10 +82,12 @@ class _PatientTabState extends State<PatientTab> {
                         ),
                         SizedBox(width: 15.w),
                         BlocBuilder<PatientCubit, PatientState>(
+                          buildWhen: (previous, current) =>
+                              current is PatientNumbersSuccess,
                           builder: (context, state) {
-                            if (state is PatientSuccess) {
+                            if (state is PatientNumbersSuccess) {
                               return TotalPatients(
-                                patients: state.patients.length,
+                                patients: state.numberOfpatients,
                               );
                             }
                             return TotalPatients(patients: 0);
@@ -98,7 +107,14 @@ class _PatientTabState extends State<PatientTab> {
                           ),
                           child: SearchTextField(
                             onChanged: (p0) {
-                              context.read<PatientCubit>().getPatients();
+                              context.read<PatientCubit>().getPatients(
+                                name: _searchController.text,
+                              );
+                              context
+                                  .read<PatientCubit>()
+                                  .getTotalPatientsNumber(
+                                    name: _searchController.text,
+                                  );
                               //! search
                             },
                             searchController: _searchController,
@@ -115,6 +131,11 @@ class _PatientTabState extends State<PatientTab> {
                     //! Patients
                     Expanded(
                       child: BlocBuilder<PatientCubit, PatientState>(
+                        buildWhen: (previous, current) =>
+                            current is PatientLoading ||
+                            current is PatientError ||
+                            (current is PatientSuccess &&
+                                current.patients != null),
                         builder: (context, state) {
                           if (state is PatientError) {
                             return Text(
@@ -126,11 +147,12 @@ class _PatientTabState extends State<PatientTab> {
                           } else if (state is PatientLoading) {
                             return Center(child: CircularProgressIndicator());
                           } else if (state is PatientSuccess &&
-                              state.patients.isEmpty) {
+                              state.patients != null &&
+                              state.patients!.isEmpty) {
                             return PatientList(filteredPatients: []);
                           } else if (state is PatientSuccess) {
                             return PatientList(
-                              filteredPatients: state.patients,
+                              filteredPatients: state.patients ?? [],
                             );
                           }
                           return SizedBox();
@@ -138,42 +160,24 @@ class _PatientTabState extends State<PatientTab> {
                       ),
                     ),
                     SizedBox(height: 16.h),
-                    //! Pagination Control Row
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        BlocBuilder<PatientCubit, PatientState>(
-                          builder: (context, state) {
-                            final count = state is PatientSuccess
-                                ? state.patients.length
-                                : 0;
-                            final rangeText = count == 0 ? '0' : '1-$count';
-                            return Text(
-                              'showing_patients'.tr(
-                                args: [rangeText, '$count'],
-                              ),
-                              style: AppTextStyles.s14bold.copyWith(
-                                fontSize: 12.sp,
-                                color: ColorManager.kGray500,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            );
-                          },
+                        IconButton(
+                          icon: const Icon(Icons.chevron_left, size: 35),
+                          color: ColorManager.kGray500,
+                          onPressed: () {
+                            context.read<PatientCubit>().previousPage();
+                          }, // Disabled in mock pagination
                         ),
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.chevron_left),
-                              color: ColorManager.kGray500,
-                              onPressed: () {}, // Disabled in mock pagination
-                            ),
-                            //! pagaintio , numberss (1..100)
-                            IconButton(
-                              icon: const Icon(Icons.chevron_right),
-                              color: ColorManager.kGray500,
-                              onPressed: () {},
-                            ),
-                          ],
+                        //! pagaintio , numberss (1..100)
+                        IconButton(
+                          icon: const Icon(Icons.chevron_right, size: 35),
+                          color: ColorManager.kGray500,
+                          onPressed: () {
+                            context.read<PatientCubit>().nextPage();
+                          },
                         ),
                       ],
                     ),

@@ -20,14 +20,14 @@ class PatientModel {
   factory PatientModel.fromJson(Map<String, dynamic> json) {
     return PatientModel(
       patientId: json['patientId']?.toString() ?? '',
-      fullName: json['fullName']?.toString() ?? '',
+      fullName: json['patientName']?.toString() ?? '',
       age: json['age'] is int
           ? json['age']
           : int.tryParse(json['age']?.toString() ?? '') ?? 0,
       gender: json['gender']?.toString() ?? '',
       phoneNumber: json['phoneNumber']?.toString() ?? '',
       lastVisitDate: json['lastVisitDate']?.toString() ?? '',
-      profilePicUrl: json['profilePicUrl']?.toString() ?? '',
+      profilePicUrl: json['pictureUrl']?.toString() ?? '',
     );
   }
 

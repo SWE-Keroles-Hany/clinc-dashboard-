@@ -93,7 +93,7 @@
   "age": "Age",
   "phone": "Phone",
   "diagnosis": "Diagnosis",
-  "total_patients_count": "{0} TOTAL",
+  "total_patients_count": "TOTAL",
   "change_status": "Change Status",
   "showing_patients": "Showing 1-{} of {} patients",
   "no_patients_found": "No patients found",

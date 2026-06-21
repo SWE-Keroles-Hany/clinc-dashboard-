@@ -94,7 +94,7 @@
   "age": "العمر",
   "phone": "الهاتف",
   "diagnosis": "التشخيص",
-  "total_patients_count": "{0} إجمالي",
+  "total_patients_count": " إجمالي",
   "change_status": "تغيير الحالة",
   "showing_patients": "عرض 1-{} من {} من المرضى",
   "no_patients_found": "لم يتم العثور على مرضى",

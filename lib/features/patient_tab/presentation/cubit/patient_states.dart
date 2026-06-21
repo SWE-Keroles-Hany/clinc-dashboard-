@@ -7,11 +7,27 @@ class PatientInitial extends PatientState {}
 class PatientLoading extends PatientState {}
 
 class PatientSuccess extends PatientState {
-  final List<PatientEntity> patients;
-  PatientSuccess({required this.patients});
+  final List<PatientEntity>? patients;
+  int? numberOfpatients;
+
+  int? pageIndex;
+
+  PatientSuccess({this.patients, this.pageIndex, this.numberOfpatients});
 }
 
 class PatientError extends PatientState {
   final String message;
+
   PatientError({required this.message});
+}
+
+class PatientNumbersSuccess extends PatientState {
+  int numberOfpatients;
+  PatientNumbersSuccess({required this.numberOfpatients});
+}
+
+class PatientNumbersError extends PatientState {
+  final String message;
+
+  PatientNumbersError({required this.message});
 }

@@ -1,6 +1,5 @@
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
-import 'package:clinc_dashboard/features/patient_tab/domain/entities/patient_entity.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -19,7 +18,7 @@ class TotalPatients extends StatelessWidget {
         borderRadius: BorderRadius.circular(6.r),
       ),
       child: Text(
-        'total_patients_count'.tr(args: [patients.toString()]),
+        "$patients ${'total_patients_count'.tr()}",
         style: AppTextStyles.s14bold.copyWith(
           fontSize: 11.sp,
           color: ColorManager.kGray500,

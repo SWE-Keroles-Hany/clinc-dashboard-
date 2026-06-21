@@ -16,6 +16,7 @@ import 'package:clinc_dashboard/features/dashboard_tab/presentation/cubit/dashbo
 import 'package:clinc_dashboard/features/patient_tab/data/data_source/patient_api_data_source.dart';
 import 'package:clinc_dashboard/features/patient_tab/domain/repo/patient_repo_imp.dart';
 import 'package:clinc_dashboard/features/patient_tab/domain/use_cases/get_patients.dart';
+import 'package:clinc_dashboard/features/patient_tab/domain/use_cases/get_total_patients_number.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_cubit.dart';
 import 'package:clinc_dashboard/features/settings_tab/data/datasources/settings_local_datasource.dart';
 import 'package:clinc_dashboard/features/settings_tab/data/repositories/settings_repository_impl.dart';
@@ -108,10 +109,15 @@ void setupServiceLocator() {
   getIt.registerSingleton<GetPatientsUseCase>(
     GetPatientsUseCase(getIt<PatientRepositoryImpl>()),
   );
-
+  getIt.registerSingleton<GetTotalPatientsNumberUseCase>(
+    GetTotalPatientsNumberUseCase(getIt<PatientRepositoryImpl>()),
+  );
   // Patient cubit
   getIt.registerFactory<PatientCubit>(
-    () => PatientCubit(getPatientsUseCase: getIt<GetPatientsUseCase>()),
+    () => PatientCubit(
+      getTotalPatientsNumberUseCase: getIt<GetTotalPatientsNumberUseCase>(),
+      getPatientsUseCase: getIt<GetPatientsUseCase>(),
+    ),
   );
 
   // Dashboard datasource and repository
