@@ -1,16 +1,9 @@
-patient tab : 
-- user profile and update medical history
-- improve pagination
 
-settgins
-- add image 
-- light / dark 
-- translate 
-
-auth : 
-- save singing ?
-- logout error 
 ================================
  - add data and test every thing  
  - improve ui 
  - if no network?
+- improve pagination in patient tab 
+- add image in settings tab 
+- translate 
+- save singing ?

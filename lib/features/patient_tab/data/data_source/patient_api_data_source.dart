@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:clinc_dashboard/core/error/failure.dart';
 import 'package:clinc_dashboard/core/network/api_constants.dart';
 import 'package:clinc_dashboard/core/network/dio_services.dart';
 import 'package:clinc_dashboard/features/patient_tab/data/data_source/patient_remote_data_source.dart';
 import 'package:clinc_dashboard/features/patient_tab/data/models/patient_model.dart';
+import 'package:dio/dio.dart';
 
 class PatientAPIDataSource implements PatientRemoteDataSource {
   final DioServices dioServices;
@@ -33,6 +36,40 @@ class PatientAPIDataSource implements PatientRemoteDataSource {
       );
       final numberOfPatients = response["totalCount"];
       return numberOfPatients;
+    } on Failure catch (error) {
+      throw Failure(message: error.message);
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<void> addMedicalRecord({
+    required String patientId,
+    required String diagnosis,
+    required String treatmentPlan,
+    File? prescriptions,
+  }) async {
+    try {
+      FormData formData = FormData.fromMap({
+        'PatientId': patientId,
+        'Diagnosis': diagnosis,
+        'TreatmentPlan': treatmentPlan,
+      });
+
+      if (prescriptions != null) {
+        formData.files.add(
+          MapEntry(
+            'Prescriptions',
+            await MultipartFile.fromFile(prescriptions.path),
+          ),
+        );
+      }
+
+      await dioServices.post(
+        endPoint: ApiEndPoints.addMedicalRecord,
+        data: formData,
+      );
     } on Failure catch (error) {
       throw Failure(message: error.message);
     } catch (e) {

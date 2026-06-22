@@ -5,7 +5,9 @@ import 'package:clinc_dashboard/features/patient_tab/presentation/widgets/medica
 import 'package:flutter/material.dart';
 
 class MedicalHistorySection extends StatelessWidget {
-  const MedicalHistorySection({super.key});
+  final String patientId;
+
+  const MedicalHistorySection({super.key, required this.patientId});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,8 @@ class MedicalHistorySection extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => const AddMedicalRecordDialog(),
+                    builder: (context) =>
+                        AddMedicalRecordDialog(patientId: patientId),
                   );
                 },
                 icon: const Icon(

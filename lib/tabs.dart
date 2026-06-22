@@ -5,6 +5,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
+import 'features/auth/presentation/screens/login_screen.dart';
+
 class Tabs extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onTabSelected;
@@ -21,7 +23,11 @@ class Tabs extends StatelessWidget {
     final tabsItem = [
       TabItem(title: "dashboard".tr(), icon: Icons.dashboard, onTap: () {}),
       TabItem(title: "patients".tr(), icon: Icons.people, onTap: () {}),
-      TabItem(title: "appointments".tr(), icon: Icons.calendar_today, onTap: () {}),
+      TabItem(
+        title: "appointments".tr(),
+        icon: Icons.calendar_today,
+        onTap: () {},
+      ),
       TabItem(title: "settings".tr(), icon: Icons.settings, onTap: () {}),
     ];
 
@@ -74,7 +80,11 @@ class Tabs extends StatelessWidget {
                           child: Text('cancel'.tr()),
                         ),
                         TextButton(
-                          onPressed: () => Navigator.of(context).pop(true),
+                          onPressed: () =>
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                LoginScreen.routeName,
+                                (route) => false,
+                              ),
                           child: Text('logout'.tr()),
                         ),
                       ],

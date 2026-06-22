@@ -7,6 +7,8 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final int maxLines;
   final IconData? suffixIcon;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   const CustomTextField({
     super.key,
@@ -14,6 +16,8 @@ class CustomTextField extends StatelessWidget {
     required this.hint,
     this.maxLines = 1,
     this.suffixIcon,
+    this.controller,
+    this.validator,
   });
 
   @override
@@ -23,7 +27,9 @@ class CustomTextField extends StatelessWidget {
       children: [
         Text(label, style: AppTextStyles.labelText),
         const SizedBox(height: 8),
-        TextField(
+        TextFormField(
+          controller: controller,
+          validator: validator,
           maxLines: maxLines,
           decoration: InputDecoration(
             hintText: hint,
@@ -48,6 +54,14 @@ class CustomTextField extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: ColorManager.primaryBlue),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.red),
             ),
           ),
         ),

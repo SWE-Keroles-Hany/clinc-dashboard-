@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class DialogFooter extends StatelessWidget {
   final VoidCallback onCancel;
-  final VoidCallback onSave;
+  final VoidCallback? onSave;
 
-  const DialogFooter({super.key, required this.onCancel, required this.onSave});
+  const DialogFooter({super.key, required this.onCancel, this.onSave});
 
   @override
   Widget build(BuildContext context) {

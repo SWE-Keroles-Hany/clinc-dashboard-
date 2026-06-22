@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clinc_dashboard/core/error/failure.dart';
 import 'package:clinc_dashboard/features/patient_tab/data/data_source/patient_remote_data_source.dart';
 import 'package:clinc_dashboard/features/patient_tab/data/mapper/patient_model_mapper.dart';
@@ -37,6 +39,28 @@ class PatientRepositoryImpl implements PatientRepository {
         name: name,
       );
       return Right(numberOfPatients);
+    } on Failure catch (error) {
+      return Left(Failure(message: error.message));
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> addMedicalRecord({
+    required String patientId,
+    required String diagnosis,
+    required String treatmentPlan,
+    File? prescriptions,
+  }) async {
+    try {
+      await remoteDataSource.addMedicalRecord(
+        patientId: patientId,
+        diagnosis: diagnosis,
+        treatmentPlan: treatmentPlan,
+        prescriptions: prescriptions,
+      );
+      return const Right(null);
     } on Failure catch (error) {
       return Left(Failure(message: error.message));
     } catch (e) {

@@ -12,4 +12,5 @@ class ApiEndPoints {
   static const String doctorProfile = "Doctor/profile";
   static const String updateDoctorImage = "Doctor/update-image";
   static const String myPatients = "Doctor/my-patients";
+  static const String addMedicalRecord = "MedicalRecords/add-record";
 }

@@ -31,3 +31,13 @@ class PatientNumbersError extends PatientState {
 
   PatientNumbersError({required this.message});
 }
+
+class AddMedicalRecordLoading extends PatientState {}
+
+class AddMedicalRecordSuccess extends PatientState {}
+
+class AddMedicalRecordError extends PatientState {
+  final String message;
+
+  AddMedicalRecordError({required this.message});
+}

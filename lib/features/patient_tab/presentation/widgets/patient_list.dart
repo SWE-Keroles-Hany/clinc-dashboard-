@@ -1,8 +1,9 @@
 import 'package:clinc_dashboard/features/patient_tab/domain/entities/patient_entity.dart';
-import 'package:clinc_dashboard/features/patient_tab/presentation/patient_profile_screen.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/widgets/patient_row_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+
+import 'add_medical_record_dialog.dart';
 
 class PatientList extends StatelessWidget {
   const PatientList({super.key, required this.filteredPatients});
@@ -19,7 +20,11 @@ class PatientList extends StatelessWidget {
         return PatientRowInfo(
           patient: patient,
           onViewPressed: () {
-            Navigator.pushNamed(context, PatientProfileScreen.routeName);
+            showDialog(
+              context: context,
+              builder: (context) =>
+                  AddMedicalRecordDialog(patientId: patient.patientId),
+            );
             //! go to user profile (data - medical history) ;
           },
         );

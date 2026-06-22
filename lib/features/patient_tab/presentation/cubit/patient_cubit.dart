@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:clinc_dashboard/features/patient_tab/domain/use_cases/add_medical_record.dart';
 import 'package:clinc_dashboard/features/patient_tab/domain/use_cases/get_patients.dart';
 import 'package:clinc_dashboard/features/patient_tab/domain/use_cases/get_total_patients_number.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_states.dart';
@@ -8,10 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class PatientCubit extends Cubit<PatientState> {
   final GetPatientsUseCase getPatientsUseCase;
   final GetTotalPatientsNumberUseCase getTotalPatientsNumberUseCase;
+  final AddMedicalRecordUseCase addMedicalRecordUseCase;
 
   PatientCubit({
     required this.getPatientsUseCase,
     required this.getTotalPatientsNumberUseCase,
+    required this.addMedicalRecordUseCase,
   }) : super(PatientInitial());
   int pageIndex = 1;
 
@@ -52,5 +56,25 @@ class PatientCubit extends Cubit<PatientState> {
     ) {
       emit(PatientNumbersSuccess(numberOfpatients: value));
     });
+  }
+
+  Future<void> addMedicalRecord({
+    required String patientId,
+    required String diagnosis,
+    required String treatmentPlan,
+    File? prescriptions,
+  }) async {
+    emit(AddMedicalRecordLoading());
+    final result = await addMedicalRecordUseCase(
+      patientId: patientId,
+      diagnosis: diagnosis,
+      treatmentPlan: treatmentPlan,
+      prescriptions: prescriptions,
+    );
+
+    result.fold(
+      (failure) => emit(AddMedicalRecordError(message: failure.message)),
+      (_) => emit(AddMedicalRecordSuccess()),
+    );
   }
 }
