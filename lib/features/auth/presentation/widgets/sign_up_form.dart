@@ -25,11 +25,38 @@ class _SignUpFormState extends State<SignUpForm> {
   final fullNameController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final emailController = TextEditingController();
+  final addressController = TextEditingController();
+
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final specialtyController = TextEditingController();
   bool isAgreedToTerms = false;
-  String? selectedGender;
+  String selectedGender = "";
+  String selectedSpeciality = "";
+  final List<String> genders = ["male".tr(), "female".tr()];
+  final List<String> specialities = [
+    "Cardiology",
+    "Dentistry",
+    "Dermatology",
+    "Endocrinology",
+    "ENT - Otolaryngology",
+    "Gastroenterology",
+    "General Surgery",
+    "Hematology",
+    "Internal Medicine",
+    "Nephrology",
+    "Neurology",
+    "Nutrition and Dietetics",
+    "Obstetrics and Gynecology",
+    "Oncology",
+    "Ophthalmology",
+    "Orthopedics",
+    "Pediatrics",
+    "Psychiatry",
+    "Pulmonology",
+    "Rheumatology",
+    "Urology",
+  ];
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -84,19 +111,6 @@ class _SignUpFormState extends State<SignUpForm> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
-                        child: CustomInputField(
-                          icon: Icons.medical_services_rounded,
-                          hintText: 'specialty_hint'.tr(),
-                          keyboardType: TextInputType.text,
-                          title: 'specialty'.tr(),
-                          controller: specialtyController,
-                          validator: AppValidations.nameValidator,
-                        ),
-                      ),
-                      SizedBox(width: 15.w),
-
-                      Expanded(
                         flex: 1,
                         child: CustomDropDown(
                           validator: (value) {
@@ -107,14 +121,33 @@ class _SignUpFormState extends State<SignUpForm> {
                           },
                           label: 'gender'.tr(),
                           value: selectedGender,
-                          items: [
-                            'male'.tr(),
-                            'female'.tr(),
-                          ],
+                          items: genders,
                           onChanged: (value) {
                             if (value != null) {
                               setState(() {
                                 selectedGender = value;
+                              });
+                            }
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Expanded(
+                        flex: 1,
+                        child: CustomDropDown(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'select_speicality'.tr();
+                            }
+                            return null;
+                          },
+                          label: 'Speicality'.tr(),
+                          value: selectedSpeciality,
+                          items: specialities,
+                          onChanged: (value) {
+                            if (value != null) {
+                              setState(() {
+                                selectedSpeciality = value;
                               });
                             }
                           },
@@ -142,6 +175,15 @@ class _SignUpFormState extends State<SignUpForm> {
                   ),
                   SizedBox(height: 10.h),
                   CustomInputField(
+                    icon: Icons.location_on,
+                    hintText: 'New Assiut - street 3'.tr(),
+                    keyboardType: TextInputType.emailAddress,
+                    title: 'Clinc Address'.tr(),
+                    controller: addressController,
+                    validator: AppValidations.addressValidator,
+                  ),
+                  SizedBox(height: 10.h),
+                  CustomInputField(
                     isPasswordField: true,
                     icon: Icons.lock,
                     hintText: 'password_hint'.tr(),
@@ -163,6 +205,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           password: passwordController.text.trim(),
                         ),
                   ),
+
                   SizedBox(height: 3.h),
                   Row(
                     children: [
@@ -193,7 +236,8 @@ class _SignUpFormState extends State<SignUpForm> {
                         ? null
                         : () {
                             if (!(_formKey.currentState!.validate() &&
-                                selectedGender?.isNotEmpty == true)) {
+                                selectedGender.isNotEmpty == true &&
+                                selectedSpeciality.isNotEmpty == true)) {
                               return;
                             }
                             if (!isAgreedToTerms) {
@@ -209,11 +253,11 @@ class _SignUpFormState extends State<SignUpForm> {
                               fullName: fullNameController.text.trim(),
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
-                              gender: selectedGender ?? 'Male',
+                              gender: selectedGender,
                               phoneNumber: phoneNumberController.text.trim(),
-                              specialty: specialtyController.text.trim(),
+                              specialty: selectedSpeciality,
                               yearsOfExperience: 0,
-                              clinicAddress: "null",
+                              clinicAddress: addressController.text,
                               bio: "",
                               profilePictureUrl: "null",
                             );

@@ -45,8 +45,8 @@ class CustomDropDown extends StatelessWidget {
                   selectOnly: true,
                   enableFilter: false,
                   enableSearch: false,
-                  hintText: "Male",
-                  width: 250.w,
+                  hintText: "",
+                  width: 200.w,
                   initialSelection: fieldState.value,
                   textStyle: AppTextStyles.s14bold,
                   inputDecorationTheme: InputDecorationTheme(
