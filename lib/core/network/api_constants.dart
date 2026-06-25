@@ -13,4 +13,6 @@ class ApiEndPoints {
   static const String updateDoctorImage = "Doctor/update-image";
   static const String myPatients = "Doctor/my-patients";
   static const String addMedicalRecord = "MedicalRecords/add-record";
+  static const String setSchedule = "DoctorSchedules/set-schedule";
+  static const String getWorkingDays = "DoctorSchedules/doctor";
 }

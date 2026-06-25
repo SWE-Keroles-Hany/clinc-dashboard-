@@ -1,5 +1,5 @@
 import 'package:clinc_dashboard/features/auth/data/models/doctor_model.dart';
-import 'package:flutter/foundation.dart';
+import 'package:clinc_dashboard/features/settings_tab/data/models/schedule_model.dart';
 
 abstract class SettingsRemoteDataSource {
   Future<DoctorModel> getProfile();
@@ -7,4 +7,8 @@ abstract class SettingsRemoteDataSource {
   Future<void> updateProfile({required DoctorModel doctor});
 
   Future<void> updateProfileImage({String? profileImagePath});
+
+  Future<void> setSchedule({required List<ScheduleModel> schedules});
+
+  // Future<List<ScheduleModel>> getWorkingDays({required int doctorId});
 }

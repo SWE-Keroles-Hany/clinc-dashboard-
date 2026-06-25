@@ -1,7 +1,7 @@
 
 ================================
  - add data and test every thing  
- - improve ui 
+ - improve ui -- MUST MUST 
  - if no network?
 - improve pagination in patient tab 
 - add image in settings tab 

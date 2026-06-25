@@ -1,4 +1,5 @@
 class DoctorModel {
+  final String? id;
   final String fullName;
   final String email;
   final String password;
@@ -11,6 +12,7 @@ class DoctorModel {
   final String? profilePictureUrl;
 
   DoctorModel({
+    this.id,
     required this.fullName,
     required this.email,
     required this.phoneNumber,
@@ -25,6 +27,7 @@ class DoctorModel {
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) {
     return DoctorModel(
+      id: json['id']?.toString() ?? json['Id']?.toString(),
       fullName:
           json['fullName']?.toString() ?? json['FullName']?.toString() ?? '',
       email: json['email']?.toString() ?? json['Email']?.toString() ?? '',
@@ -54,6 +57,7 @@ class DoctorModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'FullName': fullName,
       'Email': email,
       'Password': password,

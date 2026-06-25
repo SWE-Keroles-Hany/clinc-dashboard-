@@ -32,6 +32,8 @@ import 'package:clinc_dashboard/features/settings_tab/domain/usecases/get_langua
 import 'package:clinc_dashboard/features/settings_tab/domain/usecases/save_language_usecase.dart';
 import 'package:clinc_dashboard/features/settings_tab/domain/usecases/update_profile_image_usecase.dart';
 import 'package:clinc_dashboard/features/settings_tab/domain/usecases/update_profile_usecase.dart';
+import 'package:clinc_dashboard/features/settings_tab/domain/usecases/set_schedule_usecase.dart';
+import 'package:clinc_dashboard/features/settings_tab/domain/usecases/get_working_days_usecase.dart';
 import 'package:clinc_dashboard/features/settings_tab/presentation/cubit/settings_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -73,6 +75,12 @@ void setupServiceLocator() {
   getIt.registerSingleton<UpdateProfileImageUseCase>(
     UpdateProfileImageUseCase(getIt<SettingsRepositoryImpl>()),
   );
+  getIt.registerSingleton<SetScheduleUseCase>(
+    SetScheduleUseCase(getIt<SettingsRepositoryImpl>()),
+  );
+  getIt.registerSingleton<GetWorkingDaysUseCase>(
+    GetWorkingDaysUseCase(getIt<SettingsRepositoryImpl>()),
+  );
 
   // Settings cubit
   getIt.registerFactory<SettingsCubit>(
@@ -82,6 +90,8 @@ void setupServiceLocator() {
       getProfileUseCase: getIt<GetProfileUseCase>(),
       updateProfileUseCase: getIt<UpdateProfileUseCase>(),
       updateProfileImageUseCase: getIt<UpdateProfileImageUseCase>(),
+      setScheduleUseCase: getIt<SetScheduleUseCase>(),
+      // getWorkingDaysUseCase: getIt<GetWorkingDaysUseCase>(),
     ),
   );
 

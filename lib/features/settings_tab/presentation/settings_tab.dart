@@ -5,6 +5,7 @@ import 'package:clinc_dashboard/features/settings_tab/presentation/clinic_inform
 import 'package:clinc_dashboard/features/settings_tab/presentation/account_settings_card.dart';
 import 'package:clinc_dashboard/features/settings_tab/presentation/preferences_card.dart';
 import 'package:clinc_dashboard/features/settings_tab/presentation/need_help_card.dart';
+import 'package:clinc_dashboard/features/settings_tab/presentation/working_days_card.dart';
 import 'package:clinc_dashboard/features/settings_tab/presentation/cubit/settings_cubit.dart';
 import 'package:clinc_dashboard/features/settings_tab/presentation/cubit/settings_states.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -47,6 +48,7 @@ class _SettingsTabState extends State<SettingsTab> {
     final cubit = context.read<SettingsCubit>();
     cubit.loadLanguage();
     cubit.getProfile();
+    // cubit.getWorkingDays();
   }
 
   @override
@@ -212,32 +214,38 @@ class _SettingsTabState extends State<SettingsTab> {
                     // Left main column
                     Expanded(
                       flex: 3,
-                      child: Column(
-                        children: [
-                          ClinicInformationCard(
-                            specialtyController: specialtyController,
-                            phoneController: phoneController,
-                            emailController: emailController,
-                            yearsOfExperienceController:
-                                yearsOfExperienceController,
-                            addressController: addressController,
-                            bioController: bioController,
-                            isEditing: _isEditing,
-                            onToggleEdit: _toggleEdit,
-                            inputDecoration: _inputDecoration(),
-                            labelStyle: labelStyle,
-                          ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            ClinicInformationCard(
+                              specialtyController: specialtyController,
+                              phoneController: phoneController,
+                              emailController: emailController,
+                              yearsOfExperienceController:
+                                  yearsOfExperienceController,
+                              addressController: addressController,
+                              bioController: bioController,
+                              isEditing: _isEditing,
+                              onToggleEdit: _toggleEdit,
+                              inputDecoration: _inputDecoration(),
+                              labelStyle: labelStyle,
+                            ),
 
-                          const SizedBox(height: 16),
+                            const SizedBox(height: 16),
 
-                          AccountSettingsCard(
-                            profileNameController: profileNameController,
-                            personalEmailController: personalEmailController,
-                            isEditing: _isEditing,
-                            inputDecoration: _inputDecoration(),
-                            labelStyle: labelStyle,
-                          ),
-                        ],
+                            AccountSettingsCard(
+                              profileNameController: profileNameController,
+                              personalEmailController: personalEmailController,
+                              isEditing: _isEditing,
+                              inputDecoration: _inputDecoration(),
+                              labelStyle: labelStyle,
+                            ),
+
+                            const SizedBox(height: 16),
+
+                            const WorkingDaysCard(),
+                          ],
+                        ),
                       ),
                     ),
 

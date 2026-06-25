@@ -2,6 +2,7 @@ import 'package:clinc_dashboard/core/error/failure.dart';
 import 'package:clinc_dashboard/features/auth/data/models/doctor_model.dart';
 import 'package:clinc_dashboard/features/settings_tab/data/datasources/settings_local_datasource.dart';
 import 'package:clinc_dashboard/features/settings_tab/data/datasources/settings_remote_datasource.dart';
+import 'package:clinc_dashboard/features/settings_tab/data/models/schedule_model.dart';
 import 'package:clinc_dashboard/features/settings_tab/domain/repositories/settings_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
@@ -78,4 +79,34 @@ class SettingsRepositoryImpl implements SettingsRepository {
       return Left(Failure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> setSchedule({
+    required List<ScheduleModel> schedules,
+  }) async {
+    try {
+      await remoteDataSource.setSchedule(schedules: schedules);
+      return const Right(null);
+    } on Failure catch (error) {
+      return Left(Failure(message: error.message));
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  // @override
+  // Future<Either<Failure, List<ScheduleModel>>> getWorkingDays({
+  //   required int doctorId,
+  // }) async {
+  //   try {
+  //     final schedules = await remoteDataSource.getWorkingDays(
+  //       doctorId: doctorId,
+  //     );
+  //     return Right(schedules);
+  //   } on Failure catch (error) {
+  //     return Left(Failure(message: error.message));
+  //   } catch (e) {
+  //     return Left(Failure(message: e.toString()));
+  //   }
+  // }
 }

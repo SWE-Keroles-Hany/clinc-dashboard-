@@ -1,7 +1,7 @@
 import 'package:clinc_dashboard/core/error/failure.dart';
 import 'package:clinc_dashboard/features/auth/data/models/doctor_model.dart';
+import 'package:clinc_dashboard/features/settings_tab/data/models/schedule_model.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart';
 
 abstract class SettingsRepository {
   Future<Either<Failure, String>> getLanguage();
@@ -9,4 +9,10 @@ abstract class SettingsRepository {
   Future<Either<Failure, DoctorModel>> getProfile();
   Future<Either<Failure, void>> updateProfile({required DoctorModel doctor});
   Future<Either<Failure, void>> updateProfileImage({String? profileImagePath});
+  Future<Either<Failure, void>> setSchedule({
+    required List<ScheduleModel> schedules,
+  });
+  // Future<Either<Failure, List<ScheduleModel>>> getWorkingDays({
+  //   required int doctorId,
+  // });
 }
