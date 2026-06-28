@@ -1,9 +1,14 @@
-
-================================
- - add data and test every thing  
- - improve ui -- MUST MUST 
- - if no network?
-- improve pagination in patient tab 
-- add image in settings tab 
-- translate 
-- save singing ?
+===>
+-> after shifting in tab (patient tab - appointments tab)
+-> last visit date ??? (==> show logic <==)
+-> paitnet image 
+=== in assiut 
+-> add image in settings tab
+-> translate 
+-> last test.
+===>
+*** after grad ***
+1- ui must be good. 
+2- save singing ? (what happen when refresh ).
+3- network.
+4- improve pagination in patient tab. 

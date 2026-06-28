@@ -35,6 +35,9 @@ class _AppoinmentRowInfoState extends State<AppoinmentRowInfo> {
     } else if (status == "pending") {
       textColor = ColorManager.pending;
       bgColor = ColorManager.pendingBg;
+    } else if (status == "confirmed") {
+      textColor = ColorManager.confirmed;
+      bgColor = ColorManager.completedBg;
     } else {
       textColor = ColorManager.error;
       bgColor = ColorManager.errordBg;
@@ -65,7 +68,7 @@ class _AppoinmentRowInfoState extends State<AppoinmentRowInfo> {
                   ),
                   child: CircleAvatar(
                     radius: 22.r,
-                    backgroundImage: AssetImage(widget.imgURL),
+                    backgroundImage: NetworkImage(widget.imgURL),
                   ),
                 ),
                 SizedBox(width: 12.w),

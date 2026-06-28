@@ -57,7 +57,6 @@ class _AppointmentCardState extends State<AppointmentCard> {
       case 'completed':
         return 3;
       case 'cancelled':
-      case 'canceled':
         return 4;
       default:
         return 1;

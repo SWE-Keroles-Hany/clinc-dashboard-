@@ -18,6 +18,7 @@ class AppointmentsTab extends StatefulWidget {
 }
 
 class _AppointmentsTabState extends State<AppointmentsTab> {
+  String? selectedDate;
   @override
   void initState() {
     super.initState();
@@ -59,12 +60,75 @@ class _AppointmentsTabState extends State<AppointmentsTab> {
             //! Filters row (flow dashboard style )
             SizedBox(
               height: 40.h,
-              child: FilterList(
-                onStatusSelected: (status) {
-                  context.read<AppointmentCubit>().getAppointment(
-                    status: status,
-                  );
-                },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FilterList(
+                      onStatusSelected: (status) {
+                        context.read<AppointmentCubit>().getAppointment(
+                          status: status,
+                          selectedDate: selectedDate,
+                        );
+                      },
+                    ),
+                  ),
+
+                  // GestureDetector(
+                  //   onTap: () {},
+                  //   child: Container(
+                  //     padding: EdgeInsets.symmetric(
+                  //       vertical: 4.h,
+                  //       horizontal: 8.w,
+                  //     ),
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(8.r),
+                  //       color: ColorManager.kGray500,
+                  //     ),
+                  //     child: Text("Filter .."),
+                  //   ),
+                  // ),
+                  IconButton(
+                    onPressed: () {
+                      selectedDate = null;
+                      setState(() {});
+                    },
+                    icon: Icon(Icons.delete, color: ColorManager.red),
+                  ),
+                  Text(selectedDate ?? "", style: AppTextStyles.s20bold),
+                  IconButton(
+                    onPressed: () async {
+                      final DateTime now = DateTime.now();
+
+                      final date = await showDatePicker(
+                        context: context,
+                        initialDate: now,
+                        firstDate: DateTime(
+                          now.year - 1,
+                          now.month,
+                          now.day,
+                        ), // سنة فاتت
+                        lastDate: DateTime(
+                          now.year + 1,
+                          now.month,
+                          now.day,
+                        ), // سنة جاية
+                      );
+                      if (date != null) {
+                        String formattedDate = DateFormat(
+                          'yyyy-MM-dd',
+                        ).format(date);
+                        setState(() {
+                          selectedDate = formattedDate;
+                        });
+                      }
+                    },
+                    icon: Icon(
+                      Icons.date_range,
+                      color: ColorManager.primary,
+                      size: 35,
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 16.h),

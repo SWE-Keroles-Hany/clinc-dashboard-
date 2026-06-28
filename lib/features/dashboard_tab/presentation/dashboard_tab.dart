@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:clinc_dashboard/core/utils/ui_utils.dart';
@@ -48,6 +50,7 @@ class _DashboardTabState extends State<DashboardTab> {
         final appointments = state.appointments ?? const <AppointmentEntity>[];
         final isLoadingStats = state is DashboardStatsLoading;
         final isLoadingAppointments = state is AppointmentsLoading;
+        log("States ==> $stats");
         return Container(
           padding: EdgeInsets.fromLTRB(32.r, 32.r, 32.r, 24.r),
           child: Column(

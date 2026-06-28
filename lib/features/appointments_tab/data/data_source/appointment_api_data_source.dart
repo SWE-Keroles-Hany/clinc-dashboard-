@@ -10,11 +10,14 @@ class AppointmentAPIDataSource implements AppointmentRemoteDataSource {
   AppointmentAPIDataSource(this.dioServices);
 
   @override
-  Future<List<AppointmentModel>> getAppointments({int? status}) async {
+  Future<List<AppointmentModel>> getAppointments({
+    int? status,
+    String? selectedDate,
+  }) async {
     try {
       final response = await dioServices.get(
         endPoint: ApiEndPoints.appointments,
-        queryParams: {'todayOnly': false, if (status != null) 'status': status},
+        queryParams: {'selectedDate': selectedDate, 'status': status},
       );
 
       final List<dynamic> rawList = response is List

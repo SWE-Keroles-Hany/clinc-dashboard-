@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:clinc_dashboard/features/patient_tab/domain/use_cases/add_medical_record.dart';
 import 'package:clinc_dashboard/features/patient_tab/domain/use_cases/get_patients.dart';
@@ -62,14 +63,16 @@ class PatientCubit extends Cubit<PatientState> {
     required String patientId,
     required String diagnosis,
     required String treatmentPlan,
-    File? prescriptions,
+    Uint8List? prescriptionBytes,
+    String? fileName,
   }) async {
     emit(AddMedicalRecordLoading());
     final result = await addMedicalRecordUseCase(
       patientId: patientId,
       diagnosis: diagnosis,
       treatmentPlan: treatmentPlan,
-      prescriptions: prescriptions,
+      prescriptionBytes: prescriptionBytes,
+      fileName: fileName,
     );
 
     result.fold(

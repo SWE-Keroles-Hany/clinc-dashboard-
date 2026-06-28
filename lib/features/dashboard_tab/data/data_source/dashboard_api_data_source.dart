@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clinc_dashboard/core/error/failure.dart';
 import 'package:clinc_dashboard/core/network/api_constants.dart';
 import 'package:clinc_dashboard/core/network/dio_services.dart';
@@ -16,17 +18,11 @@ class DashboardAPIDataSource implements DashboardRemoteDataSource {
         endPoint: ApiEndPoints.dashboardStats,
       );
 
-      final totalPatients = _toInt(response['totalPatients']);
-      final todayAppointments = _toInt(response['todayAppointments']);
-      final completedAppointments = _toInt(response['completedAppointments']);
-      final cancelledAppointments = _toInt(
-        response['cancelledAppointments'] ?? response['cacelledAppointments'],
-      );
-      final pendingAppointments = _toInt(
-        response['pendingAppointments'],
-        fallback:
-            todayAppointments - completedAppointments - cancelledAppointments,
-      );
+      final totalPatients = response['totalPatients'];
+      final todayAppointments = response['todaysAppointments'];
+      final completedAppointments = response['completedAppointments'];
+      final cancelledAppointments = response['cancelledAppointments'];
+      final pendingAppointments = response['pendingAppointments'];
 
       return [
         totalPatients,
@@ -49,7 +45,7 @@ class DashboardAPIDataSource implements DashboardRemoteDataSource {
     try {
       final List<dynamic> response = await dioServices.get(
         endPoint: ApiEndPoints.appointments,
-        queryParams: {'todayOnly': true},
+        queryParams: {'todayOnly': true, 'status': 2},
       );
 
       return response.map((item) => AppointmentModel.fromJson(item)).toList();

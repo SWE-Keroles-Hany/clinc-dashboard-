@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:clinc_dashboard/features/patient_tab/data/models/patient_model.dart';
 
@@ -9,6 +9,7 @@ abstract class PatientRemoteDataSource {
     required String patientId,
     required String diagnosis,
     required String treatmentPlan,
-    File? prescriptions,
+    Uint8List? prescriptionBytes,
+    String? fileName,
   });
 }

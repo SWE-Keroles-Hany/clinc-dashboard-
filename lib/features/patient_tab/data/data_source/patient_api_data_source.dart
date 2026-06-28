@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:clinc_dashboard/core/error/failure.dart';
 import 'package:clinc_dashboard/core/network/api_constants.dart';
@@ -20,6 +22,7 @@ class PatientAPIDataSource implements PatientRemoteDataSource {
             "${ApiEndPoints.myPatients}/?pageIndex=$pageIndex&pageSize=8&name=$name",
       );
       final List<dynamic> patients = response["data"];
+      // log(patients);
       return patients.map((item) => PatientModel.fromJson(item)).toList();
     } on Failure catch (error) {
       throw Failure(message: error.message);
@@ -48,7 +51,8 @@ class PatientAPIDataSource implements PatientRemoteDataSource {
     required String patientId,
     required String diagnosis,
     required String treatmentPlan,
-    File? prescriptions,
+    Uint8List? prescriptionBytes,
+    String? fileName,
   }) async {
     try {
       FormData formData = FormData.fromMap({
@@ -57,11 +61,14 @@ class PatientAPIDataSource implements PatientRemoteDataSource {
         'TreatmentPlan': treatmentPlan,
       });
 
-      if (prescriptions != null) {
+      if (prescriptionBytes != null) {
         formData.files.add(
           MapEntry(
             'Prescriptions',
-            await MultipartFile.fromFile(prescriptions.path),
+            MultipartFile.fromBytes(
+              prescriptionBytes,
+              filename: fileName ?? 'prescription.jpg',
+            ),
           ),
         );
       }

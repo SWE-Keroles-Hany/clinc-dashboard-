@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clinc_dashboard/features/appointments_tab/domain/use_cases/get_appointments.dart';
 import 'package:clinc_dashboard/features/appointments_tab/domain/use_cases/update_appointment_type.dart';
 import 'package:clinc_dashboard/features/appointments_tab/presentation/cubit/appointment_states.dart';
@@ -12,7 +14,7 @@ class AppointmentCubit extends Cubit<AppointmentState> {
     required this.updateAppointmentTypeUseCase,
   }) : super(const AppointmentInitial());
 
-  Future<void> getAppointment({int? status}) async {
+  Future<void> getAppointment({int? status, String? selectedDate}) async {
     emit(
       AppointmentLoading(
         appointments: state.appointments,
@@ -20,7 +22,10 @@ class AppointmentCubit extends Cubit<AppointmentState> {
       ),
     );
 
-    final result = await getAppointmentsUseCase(status: status);
+    final result = await getAppointmentsUseCase(
+      selectedDate: selectedDate,
+      status: status,
+    );
 
     result.fold(
       (failure) => emit(
@@ -31,10 +36,7 @@ class AppointmentCubit extends Cubit<AppointmentState> {
         ),
       ),
       (appointments) => emit(
-        AppointmentSuccess(
-          appointments: appointments,
-          selectedStatus: status,
-        ),
+        AppointmentSuccess(appointments: appointments, selectedStatus: status),
       ),
     );
   }
@@ -43,6 +45,7 @@ class AppointmentCubit extends Cubit<AppointmentState> {
     required int appointmentId,
     required int newStatus,
   }) async {
+    log("new status $newStatus");
     final selectedStatus = state.selectedStatus;
     final currentAppointments = state.appointments;
 

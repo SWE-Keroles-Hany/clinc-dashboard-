@@ -8,9 +8,15 @@ class GetAppointmentsUseCase {
 
   GetAppointmentsUseCase(this.repository);
 
-  Future<Either<Failure, List<AppointmentEntity>>> call({int? status}) async {
+  Future<Either<Failure, List<AppointmentEntity>>> call({
+    int? status,
+    String? selectedDate,
+  }) async {
     try {
-      return await repository.getAppointments(status: status);
+      return await repository.getAppointments(
+        selectedDate: selectedDate,
+        status: status,
+      );
     } on Failure catch (error) {
       return Left(Failure(message: error.message));
     } catch (e) {

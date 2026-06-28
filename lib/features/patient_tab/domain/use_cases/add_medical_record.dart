@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:clinc_dashboard/core/error/failure.dart';
 import 'package:clinc_dashboard/features/patient_tab/data/repo/patient_repo.dart';
@@ -13,14 +14,16 @@ class AddMedicalRecordUseCase {
     required String patientId,
     required String diagnosis,
     required String treatmentPlan,
-    File? prescriptions,
+    Uint8List? prescriptionBytes,
+    String? fileName,
   }) async {
     try {
       return await repository.addMedicalRecord(
         patientId: patientId,
         diagnosis: diagnosis,
         treatmentPlan: treatmentPlan,
-        prescriptions: prescriptions,
+        fileName: fileName,
+        prescriptionBytes: prescriptionBytes,
       );
     } on Failure catch (error) {
       return Left(Failure(message: error.message));

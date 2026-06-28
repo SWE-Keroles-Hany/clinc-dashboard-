@@ -5,6 +5,8 @@ import 'package:dartz/dartz.dart';
 abstract class AppointmentRepository {
   Future<Either<Failure, List<AppointmentEntity>>> getAppointments({
     int? status,
+    String? selectedDate,
+
   });
 
   Future<Either<Failure, void>> updateAppointmentType({

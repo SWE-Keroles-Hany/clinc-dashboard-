@@ -13,9 +13,11 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
   @override
   Future<Either<Failure, List<AppointmentEntity>>> getAppointments({
     int? status,
+    String? selectedDate,
   }) async {
     try {
       final appointments = await remoteDataSource.getAppointments(
+        selectedDate: selectedDate,
         status: status,
       );
       return Right(appointments.map((model) => model.toEntity).toList());

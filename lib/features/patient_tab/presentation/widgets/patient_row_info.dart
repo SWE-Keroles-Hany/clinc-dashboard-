@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:clinc_dashboard/features/patient_tab/domain/entities/patient_entity.dart';
@@ -23,6 +25,7 @@ class _PatientRowInfoState extends State<PatientRowInfo> {
   bool _isHovered = false;
   @override
   Widget build(BuildContext context) {
+    log("wURL =>${widget.patient.profilePicUrl}");
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),

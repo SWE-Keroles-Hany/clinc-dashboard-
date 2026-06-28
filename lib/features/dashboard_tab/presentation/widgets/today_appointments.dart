@@ -17,7 +17,7 @@ class TodayAppointments extends StatelessWidget {
       itemBuilder: (_, index) {
         final appointment = appointments[index];
         return AppoinmentRowInfo(
-          imgURL: "assets/images/kero.jpg",
+          imgURL: appointment.imgURL ?? "",
           name: appointment.patientName,
           status: appointment.status,
           time: formatAppointmentTime(appointment.appointmentDate),

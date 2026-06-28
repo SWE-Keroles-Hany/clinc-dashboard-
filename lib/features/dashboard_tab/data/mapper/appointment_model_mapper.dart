@@ -3,6 +3,7 @@ import 'package:clinc_dashboard/features/dashboard_tab/domain/entities/appointme
 
 extension AppointmentModelMapper on AppointmentModel {
   AppointmentEntity get toEntity => AppointmentEntity(
+    imgURL: imgURL,
     appointmentId: appointmentId,
     patientName: patientName,
     appointmentDate: appointmentDate,

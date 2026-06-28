@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_cubit.dart';
@@ -26,15 +27,19 @@ class _AddMedicalRecordDialogState extends State<AddMedicalRecordDialog> {
   File? _prescriptionsFile;
   final ImagePicker _imagePicker = ImagePicker();
   bool _isLoading = false;
-
+  Uint8List? _prescriptionBytes;
+  String? _fileName;
   Future<void> _pickFile() async {
     final XFile? pickedFile = await _imagePicker.pickImage(
       source: ImageSource.gallery,
     );
 
     if (pickedFile != null) {
+      final bytes = await pickedFile.readAsBytes();
+
       setState(() {
-        _prescriptionsFile = File(pickedFile.path);
+        _prescriptionBytes = bytes;
+        _fileName = pickedFile.name;
       });
     }
   }
@@ -45,7 +50,8 @@ class _AddMedicalRecordDialogState extends State<AddMedicalRecordDialog> {
         patientId: widget.patientId,
         diagnosis: _diagnosisController.text,
         treatmentPlan: _treatmentPlanController.text,
-        prescriptions: _prescriptionsFile,
+        fileName: _fileName,
+        prescriptionBytes: _prescriptionBytes,
       );
     }
   }

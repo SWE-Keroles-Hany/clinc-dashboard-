@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:clinc_dashboard/core/error/failure.dart';
 import 'package:clinc_dashboard/features/patient_tab/data/data_source/patient_remote_data_source.dart';
@@ -51,14 +52,16 @@ class PatientRepositoryImpl implements PatientRepository {
     required String patientId,
     required String diagnosis,
     required String treatmentPlan,
-    File? prescriptions,
+    Uint8List? prescriptionBytes,
+    String? fileName,
   }) async {
     try {
       await remoteDataSource.addMedicalRecord(
-        patientId: patientId,
         diagnosis: diagnosis,
+        patientId: patientId,
         treatmentPlan: treatmentPlan,
-        prescriptions: prescriptions,
+        fileName: fileName,
+        prescriptionBytes: prescriptionBytes,
       );
       return const Right(null);
     } on Failure catch (error) {

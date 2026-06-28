@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -29,21 +31,28 @@ class _FilterListState extends State<FilterList> {
         onTap: () {
           selectedIndex = index;
           setState(() {});
+          log("${statusValues[index]}");
           widget.onStatusSelected(statusValues[index]);
         },
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 30.w),
-          decoration: BoxDecoration(
-            color: selectedIndex == index
-                ? ColorManager.primary
-                : ColorManager.kGray500,
-            borderRadius: BorderRadius.circular(8.r),
-            border: BoxBorder.all(color: Colors.transparent),
-          ),
-          child: Text(
-            list[index].tr(),
-            style: AppTextStyles.s14bold.copyWith(color: ColorManager.white),
-          ),
+        child: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 30.w),
+              decoration: BoxDecoration(
+                color: selectedIndex == index
+                    ? ColorManager.primary
+                    : ColorManager.kGray500,
+                borderRadius: BorderRadius.circular(8.r),
+                border: BoxBorder.all(color: Colors.transparent),
+              ),
+              child: Text(
+                list[index].tr(),
+                style: AppTextStyles.s14bold.copyWith(
+                  color: ColorManager.white,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
