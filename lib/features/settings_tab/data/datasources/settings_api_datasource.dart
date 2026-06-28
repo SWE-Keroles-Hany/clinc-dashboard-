@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:clinc_dashboard/core/error/failure.dart';
 import 'package:clinc_dashboard/core/network/api_constants.dart';
 import 'package:clinc_dashboard/core/network/dio_services.dart';
@@ -41,13 +43,24 @@ class SettingsAPIDataSource implements SettingsRemoteDataSource {
   }
 
   @override
-  Future<void> updateProfileImage({String? profileImagePath}) async {
+  Future<void> updateProfileImage({
+    Uint8List? prescriptionBytes,
+    String? fileName,
+  }) async {
     try {
-      final requestData = FormData.fromMap({'Image': profileImagePath});
+      if (prescriptionBytes == null) {
+        throw Failure(message: 'Image is required');
+      }
+      final formData = FormData.fromMap({
+        'Image': MultipartFile.fromBytes(
+          prescriptionBytes,
+          filename: fileName ?? 'img.png',
+        ),
+      });
 
       await dioServices.put(
         endPoint: ApiEndPoints.updateDoctorImage,
-        data: requestData,
+        data: formData,
       );
     } on Failure catch (error) {
       throw Failure(message: error.message);

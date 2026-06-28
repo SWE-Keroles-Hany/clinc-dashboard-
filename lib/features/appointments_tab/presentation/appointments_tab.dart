@@ -1,5 +1,7 @@
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
+import 'package:clinc_dashboard/features/dashboard_tab/presentation/cubit/dashboard_cubit.dart';
+import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:clinc_dashboard/core/utils/ui_utils.dart';
 import 'package:clinc_dashboard/features/appointments_tab/presentation/cubit/appointment_cubit.dart';

@@ -1,5 +1,9 @@
+import 'dart:developer';
+import 'dart:typed_data';
+
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
+import 'package:clinc_dashboard/core/utils/ui_utils.dart';
 import 'package:clinc_dashboard/features/auth/data/models/doctor_model.dart';
 import 'package:clinc_dashboard/features/settings_tab/presentation/clinic_information_card.dart';
 import 'package:clinc_dashboard/features/settings_tab/presentation/account_settings_card.dart';
@@ -11,6 +15,8 @@ import 'package:clinc_dashboard/features/settings_tab/presentation/cubit/setting
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SettingsTab extends StatefulWidget {
   const SettingsTab({super.key});
@@ -21,6 +27,26 @@ class SettingsTab extends StatefulWidget {
 
 class _SettingsTabState extends State<SettingsTab> {
   bool _isEditing = false;
+  Uint8List? _prescriptionBytes;
+  String? _fileName;
+  final ImagePicker _imagePicker = ImagePicker();
+
+  Future<void> _pickFile(BuildContext context) async {
+    final cubit = context.read<SettingsCubit>();
+    final XFile? pickedFile = await _imagePicker.pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      final bytes = await pickedFile.readAsBytes();
+      setState(() {
+        _prescriptionBytes = bytes;
+        _fileName = pickedFile.name;
+      });
+      log("befofe cubit $_prescriptionBytes");
+      cubit.updateProfileImage(_prescriptionBytes, _fileName);
+    }
+  }
 
   late final TextEditingController specialtyController;
   late final TextEditingController phoneController;
@@ -118,11 +144,12 @@ class _SettingsTabState extends State<SettingsTab> {
         .toString();
     addressController.text = doctor.clinicAddress ?? '';
     bioController.text = doctor.bio ?? '';
-    _selectedImagePath = null;
+    _selectedImagePath = doctor.profilePictureUrl;
   }
 
   @override
   Widget build(BuildContext context) {
+    log(_doctor?.profilePictureUrl ?? "no doc");
     final labelStyle = AppTextStyles.s14bold.copyWith(
       color: ColorManager.kGray500,
     );
@@ -161,7 +188,6 @@ class _SettingsTabState extends State<SettingsTab> {
       },
       builder: (context, state) {
         final isSaving = state is SettingsProfileUpdating;
-
         return Container(
           color: ColorManager.backgroud,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -253,13 +279,66 @@ class _SettingsTabState extends State<SettingsTab> {
                     // Right sidebar
                     Expanded(
                       flex: 1,
-                      child: Column(
-                        children: [
-                          PreferencesCard(labelStyle: labelStyle),
+                      child: BlocListener<SettingsCubit, SettingsState>(
+                        listener: (context, state) {
+                          if (state is UpdateProfileImageError) {
+                            UiUtils.showSnackBar(context, state.message);
+                          } else if (state is UpdateProfileImageSuccessfully) {
+                            UiUtils.showSnackBar(
+                              context,
+                              "Your Image Updated Successfully",
+                            );
+                            context.read<SettingsCubit>().getProfile();
+                          } else if (state is UpdateProfileImageLoading) {
+                            UiUtils.showSnackBar(
+                              context,
+                              "Updating The Image....",
+                            );
+                          }
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 200.h,
+                              width: 200.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: ColorManager.primary.withValues(
+                                    alpha: 0.15,
+                                  ),
+                                  width: 2,
+                                ),
+                              ),
+                              child: ClipOval(
+                                child: Image.network(
+                                  _selectedImagePath ?? "",
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Icon(
+                                      Icons.person,
+                                      size: 80.sp,
+                                      color: ColorManager.kGray500,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 6.h),
+                            IconButton(
+                              onPressed: () => _pickFile(context),
+                              icon: Icon(
+                                Icons.edit,
+                                color: ColorManager.primary,
+                              ),
+                            ),
+                            SizedBox(height: 12.h),
 
-                          const SizedBox(height: 12),
-                          const NeedHelpCard(),
-                        ],
+                            PreferencesCard(labelStyle: labelStyle),
+                            SizedBox(height: 12.h),
+                            const NeedHelpCard(),
+                          ],
+                        ),
                       ),
                     ),
                   ],

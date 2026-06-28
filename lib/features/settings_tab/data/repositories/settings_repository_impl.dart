@@ -64,13 +64,13 @@ class SettingsRepositoryImpl implements SettingsRepository {
 
   @override
   Future<Either<Failure, void>> updateProfileImage({
-    String? profileImagePath,
-    Uint8List? profileImageBytes,
-    String? profileImageName,
+    Uint8List? prescriptionBytes,
+    String? fileName,
   }) async {
     try {
       await remoteDataSource.updateProfileImage(
-        profileImagePath: profileImagePath,
+        fileName: fileName,
+        prescriptionBytes: prescriptionBytes,
       );
       return const Right(null);
     } on Failure catch (error) {

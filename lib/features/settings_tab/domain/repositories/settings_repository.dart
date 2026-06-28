@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:clinc_dashboard/core/error/failure.dart';
 import 'package:clinc_dashboard/features/auth/data/models/doctor_model.dart';
 import 'package:clinc_dashboard/features/settings_tab/data/models/schedule_model.dart';
@@ -8,11 +10,11 @@ abstract class SettingsRepository {
   Future<Either<Failure, void>> saveLanguage(String languageCode);
   Future<Either<Failure, DoctorModel>> getProfile();
   Future<Either<Failure, void>> updateProfile({required DoctorModel doctor});
-  Future<Either<Failure, void>> updateProfileImage({String? profileImagePath});
+  Future<Either<Failure, void>> updateProfileImage({
+    Uint8List? prescriptionBytes,
+    String? fileName,
+  });
   Future<Either<Failure, void>> setSchedule({
     required List<ScheduleModel> schedules,
   });
-  // Future<Either<Failure, List<ScheduleModel>>> getWorkingDays({
-  //   required int doctorId,
-  // });
 }

@@ -1,11 +1,5 @@
-===>
--> after shifting in tab (patient tab - appointments tab)
--> last visit date ??? (==> show logic <==)
--> paitnet image 
-=== in assiut 
--> add image in settings tab
--> translate 
--> last test.
+ - translate 
+-> last test flow with app 
 ===>
 *** after grad ***
 1- ui must be good. 

@@ -119,6 +119,35 @@ class SettingsScheduleLoaded extends SettingsState {
   }) : super(schedules: schedules);
 }
 
+class UpdateProfileImageLoading extends SettingsState {
+  const UpdateProfileImageLoading({
+    required super.languageCode,
+    super.doctor,
+    required List<ScheduleModel> schedules,
+    super.isEditingSchedule,
+  }) : super(schedules: schedules);
+}
+
+class UpdateProfileImageSuccessfully extends SettingsState {
+  const UpdateProfileImageSuccessfully({
+    required super.languageCode,
+    super.doctor,
+    required List<ScheduleModel> schedules,
+    super.isEditingSchedule,
+  }) : super(schedules: schedules);
+}
+
+class UpdateProfileImageError extends SettingsState {
+  final String message;
+  const UpdateProfileImageError({
+    required super.languageCode,
+    super.doctor,
+    required List<ScheduleModel> schedules,
+    super.isEditingSchedule,
+    required this.message,
+  }) : super(schedules: schedules);
+}
+
 // class SettingsScheduleUpdated extends SettingsState {
 //   const SettingsScheduleUpdated({
 //     required super.languageCode,

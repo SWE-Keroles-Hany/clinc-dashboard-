@@ -1,4 +1,5 @@
 import 'package:clinc_dashboard/core/injection/service_locator.dart';
+import 'package:clinc_dashboard/features/dashboard_tab/presentation/cubit/dashboard_cubit.dart';
 import 'package:clinc_dashboard/features/patient_tab/presentation/cubit/patient_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,18 @@ void main() async {
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
       child: MultiBlocProvider(
-        providers: [BlocProvider(create: (_) => getIt<PatientCubit>())],
+        providers: [
+          BlocProvider(
+            create: (_) => getIt<DashboardCubit>()
+              ..getDashboardStatus()
+              ..getTodayAppointments(todayOnly: true),
+          ),
+          BlocProvider(
+            create: (_) => getIt<PatientCubit>()
+              ..getPatients()
+              ..getTotalPatientsNumber(),
+          ),
+        ],
         child: const ClincDashboard(),
       ),
     ),

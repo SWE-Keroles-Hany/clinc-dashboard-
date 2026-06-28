@@ -9,13 +9,13 @@ class UpdateProfileImageUseCase {
   UpdateProfileImageUseCase(this.repository);
 
   Future<Either<Failure, void>> call({
-    String? profileImagePath,
-    Uint8List? profileImageBytes,
-    String? profileImageName,
+    Uint8List? prescriptionBytes,
+    String? fileName,
   }) async {
     try {
       return await repository.updateProfileImage(
-        profileImagePath: profileImagePath,
+        fileName: fileName,
+        prescriptionBytes: prescriptionBytes,
       );
     } on Failure catch (error) {
       return Left(Failure(message: error.message));

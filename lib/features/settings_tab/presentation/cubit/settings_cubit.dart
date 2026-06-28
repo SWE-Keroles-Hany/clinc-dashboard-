@@ -129,6 +129,48 @@ class SettingsCubit extends Cubit<SettingsState> {
     );
   }
 
+  Future<void> updateProfileImage(
+    Uint8List? prescriptionBytes,
+    String? fileName,
+  ) async {
+    emit(
+      UpdateProfileImageLoading(
+        languageCode: state.languageCode,
+        doctor: state.doctor,
+        schedules: state.schedules ?? [],
+        isEditingSchedule: state.isEditingSchedule,
+      ),
+    );
+
+    final result = await updateProfileImageUseCase(
+      fileName: fileName,
+      prescriptionBytes: prescriptionBytes,
+    );
+
+    result.fold(
+      (failure) => emit(
+        UpdateProfileImageError(
+          message: failure.message,
+          languageCode: state.languageCode,
+          doctor: state.doctor,
+          schedules: state.schedules ?? [],
+          isEditingSchedule: state.isEditingSchedule,
+        ),
+      ),
+      (_) {
+        emit(
+          UpdateProfileImageSuccessfully(
+            languageCode: state.languageCode,
+            schedules: state.schedules ?? [],
+            isEditingSchedule: state.isEditingSchedule,
+          ),
+        );
+        // Fetch working days after profile is loaded
+        // getWorkingDays();
+      },
+    );
+  }
+
   Future<void> updateProfile({
     required DoctorModel doctor,
     String? profileImagePath,
@@ -157,34 +199,6 @@ class SettingsCubit extends Cubit<SettingsState> {
         ),
       ),
       (_) async {
-        final hasImage =
-            (profileImageBytes != null && profileImageBytes.isNotEmpty) ||
-            (profileImagePath != null && profileImagePath.isNotEmpty);
-        if (hasImage) {
-          final imageResult = await updateProfileImageUseCase(
-            profileImagePath: profileImagePath,
-            profileImageBytes: profileImageBytes,
-            profileImageName: profileImageName,
-          );
-
-          var imageUploadFailed = false;
-          imageResult.fold((failure) {
-            imageUploadFailed = true;
-            emit(
-              SettingsProfileError(
-                failure.message,
-                languageCode: state.languageCode,
-                doctor: state.doctor,
-                schedules: state.schedules,
-                isEditingSchedule: state.isEditingSchedule,
-              ),
-            );
-          }, (_) {});
-          if (imageUploadFailed) {
-            return;
-          }
-        }
-
         emit(
           SettingsProfileUpdated(
             languageCode: state.languageCode,
@@ -197,42 +211,6 @@ class SettingsCubit extends Cubit<SettingsState> {
       },
     );
   }
-
-  // Future<void> getWorkingDays() async {
-  //   final doctorId = state.doctor?.id;
-  //   if (doctorId == null) return;
-
-  //   emit(
-  //     SettingsScheduleLoading(
-  //       languageCode: state.languageCode,
-  //       doctor: state.doctor,
-  //       schedules: state.schedules,
-  //       isEditingSchedule: state.isEditingSchedule,
-  //     ),
-  //   );
-
-  //   // final result = await getWorkingDaysUseCase(doctorId: 11);
-
-  //   result.fold(
-  //     (failure) => emit(
-  //       SettingsScheduleError(
-  //         failure.message,
-  //         languageCode: state.languageCode,
-  //         doctor: state.doctor,
-  //         schedules: state.schedules,
-  //         isEditingSchedule: state.isEditingSchedule,
-  //       ),
-  //     ),
-  //     (schedules) => emit(
-  //       SettingsScheduleLoaded(
-  //         languageCode: state.languageCode,
-  //         doctor: state.doctor,
-  //         schedules: schedules,
-  //         isEditingSchedule: state.isEditingSchedule,
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Future<void> setSchedule({required List<ScheduleModel> schedules}) async {
     emit(
@@ -266,15 +244,4 @@ class SettingsCubit extends Cubit<SettingsState> {
       ),
     );
   }
-
-  // void toggleEditSchedule() {
-  //   emit(
-  //     SettingsLoaded(
-  //       languageCode: state.languageCode,
-  //       doctor: state.doctor,
-  //       schedules: state.schedules,
-  //       isEditingSchedule: !state.isEditingSchedule,
-  //     ),
-  //   );
-  // }
 }
