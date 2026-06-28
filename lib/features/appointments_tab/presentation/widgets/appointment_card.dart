@@ -211,18 +211,18 @@ class _AppointmentCardState extends State<AppointmentCard> {
         child: Row(
           children: [
             //! Leading avatar
-            CircleAvatar(
-              radius: 26,
-              backgroundColor: ColorManager.lightGray,
-              child: Text(
-                widget.appointment.patientName
-                    .split(' ')
-                    .map((e) => e.isEmpty ? '' : e[0])
-                    .take(2)
-                    .join(),
-                style: AppTextStyles.s18bold.copyWith(
-                  color: ColorManager.primary,
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: ColorManager.primary.withValues(alpha: 0.15),
+                  width: 1.5,
                 ),
+              ),
+              child: CircleAvatar(
+                radius: 18.r,
+                backgroundColor: ColorManager.lightGray,
+                backgroundImage: NetworkImage(widget.appointment.imgURL ?? ""),
               ),
             ),
             SizedBox(width: 12.w),

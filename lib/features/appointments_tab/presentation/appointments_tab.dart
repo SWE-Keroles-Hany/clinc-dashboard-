@@ -72,21 +72,6 @@ class _AppointmentsTabState extends State<AppointmentsTab> {
                       },
                     ),
                   ),
-
-                  // GestureDetector(
-                  //   onTap: () {},
-                  //   child: Container(
-                  //     padding: EdgeInsets.symmetric(
-                  //       vertical: 4.h,
-                  //       horizontal: 8.w,
-                  //     ),
-                  //     decoration: BoxDecoration(
-                  //       borderRadius: BorderRadius.circular(8.r),
-                  //       color: ColorManager.kGray500,
-                  //     ),
-                  //     child: Text("Filter .."),
-                  //   ),
-                  // ),
                   IconButton(
                     onPressed: () {
                       selectedDate = null;
@@ -146,6 +131,14 @@ class _AppointmentsTabState extends State<AppointmentsTab> {
                       ),
                     );
                   } else if (state is AppointmentSuccess) {
+                    if (state.appointments!.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "No Appointments Found",
+                          style: AppTextStyles.s20bold,
+                        ),
+                      );
+                    }
                     return ListView.separated(
                       itemCount: state.appointments!.length,
                       separatorBuilder: (_, _) => SizedBox(height: 12.h),
