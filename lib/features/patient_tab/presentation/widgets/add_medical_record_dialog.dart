@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddMedicalRecordDialog extends StatefulWidget {
-  final String patientId;
+  final int patientId;
 
   const AddMedicalRecordDialog({super.key, required this.patientId});
 

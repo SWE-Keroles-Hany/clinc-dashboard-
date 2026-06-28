@@ -1,7 +1,7 @@
 import 'dart:io';
 
 class MedicalRecordModel {
-  final String patientId;
+  final int patientId;
   final String diagnosis;
   final String treatmentPlan;
   final File? prescriptions;

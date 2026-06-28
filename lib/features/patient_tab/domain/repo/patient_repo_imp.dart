@@ -49,7 +49,7 @@ class PatientRepositoryImpl implements PatientRepository {
 
   @override
   Future<Either<Failure, void>> addMedicalRecord({
-    required String patientId,
+    required int patientId,
     required String diagnosis,
     required String treatmentPlan,
     Uint8List? prescriptionBytes,

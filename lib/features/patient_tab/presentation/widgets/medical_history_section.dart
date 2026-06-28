@@ -5,7 +5,7 @@ import 'package:clinc_dashboard/features/patient_tab/presentation/widgets/medica
 import 'package:flutter/material.dart';
 
 class MedicalHistorySection extends StatelessWidget {
-  final String patientId;
+  final int patientId;
 
   const MedicalHistorySection({super.key, required this.patientId});
 

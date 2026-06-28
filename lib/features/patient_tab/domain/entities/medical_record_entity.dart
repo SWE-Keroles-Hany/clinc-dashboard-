@@ -1,5 +1,5 @@
 class MedicalRecordEntity {
-  final String patientId;
+  final int patientId;
   final String diagnosis;
   final String treatmentPlan;
 

@@ -6,7 +6,7 @@ abstract class PatientRemoteDataSource {
   Future<List<PatientModel>> getPatients({String? name, int? pageIndex});
   Future<int> getTotalPatientsNumber({String? name});
   Future<void> addMedicalRecord({
-    required String patientId,
+    required int patientId,
     required String diagnosis,
     required String treatmentPlan,
     Uint8List? prescriptionBytes,

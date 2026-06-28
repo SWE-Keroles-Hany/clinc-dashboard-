@@ -1,5 +1,5 @@
 class PatientEntity {
-  final String patientId;
+  final int patientId;
   final String fullName;
   final int age;
   final String gender;

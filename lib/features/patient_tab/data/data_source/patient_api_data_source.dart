@@ -48,7 +48,7 @@ class PatientAPIDataSource implements PatientRemoteDataSource {
 
   @override
   Future<void> addMedicalRecord({
-    required String patientId,
+    required int patientId,
     required String diagnosis,
     required String treatmentPlan,
     Uint8List? prescriptionBytes,

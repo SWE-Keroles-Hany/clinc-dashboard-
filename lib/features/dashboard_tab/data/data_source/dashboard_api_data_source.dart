@@ -52,13 +52,8 @@ class DashboardAPIDataSource implements DashboardRemoteDataSource {
     } on Failure catch (error) {
       throw Failure(message: error.message);
     } catch (e) {
+      log("eror in today ${e.toString()}");
       throw Failure(message: e.toString());
     }
-  }
-
-  int _toInt(dynamic value, {int fallback = 0}) {
-    if (value == null) return fallback;
-    if (value is int) return value;
-    return int.tryParse(value.toString()) ?? fallback;
   }
 }

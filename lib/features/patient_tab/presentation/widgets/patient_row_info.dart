@@ -50,7 +50,7 @@ class _PatientRowInfoState extends State<PatientRowInfo> {
             Expanded(
               flex: 2,
               child: Text(
-                widget.patient.patientId,
+                "${widget.patient.patientId}",
                 style: AppTextStyles.s14bold.copyWith(
                   fontFamily: 'monospace',
                   color: ColorManager.kGray500,

@@ -1,5 +1,5 @@
 class DoctorModel {
-  final String? id;
+  int? id;
   final String fullName;
   final String email;
   final String password;
@@ -27,7 +27,7 @@ class DoctorModel {
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) {
     return DoctorModel(
-      id: json['id']?.toString() ?? json['Id']?.toString(),
+      id: json['id'] ?? json['Id'] ?? 0,
       fullName:
           json['fullName']?.toString() ?? json['FullName']?.toString() ?? '',
       email: json['email']?.toString() ?? json['Email']?.toString() ?? '',

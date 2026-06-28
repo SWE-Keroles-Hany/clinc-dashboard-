@@ -1,5 +1,5 @@
 class PatientModel {
-  final String patientId;
+  final int patientId;
   final String fullName;
   final int age;
   final String gender;
@@ -19,7 +19,7 @@ class PatientModel {
 
   factory PatientModel.fromJson(Map<String, dynamic> json) {
     return PatientModel(
-      patientId: json['patientId']?.toString() ?? '',
+      patientId: json['patientId'] ?? 0,
       fullName: json['patientName']?.toString() ?? '',
       age: json['age'] is int
           ? json['age']

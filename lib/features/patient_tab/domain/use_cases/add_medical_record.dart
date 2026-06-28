@@ -11,7 +11,7 @@ class AddMedicalRecordUseCase {
   AddMedicalRecordUseCase(this.repository);
 
   Future<Either<Failure, void>> call({
-    required String patientId,
+    required int patientId,
     required String diagnosis,
     required String treatmentPlan,
     Uint8List? prescriptionBytes,

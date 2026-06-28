@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:clinc_dashboard/core/error/failure.dart';
@@ -19,7 +20,7 @@ class SettingsAPIDataSource implements SettingsRemoteDataSource {
       final response = await dioServices.get(
         endPoint: ApiEndPoints.doctorProfile,
       );
-
+      log(response.toString());
       return DoctorModel.fromJson(response);
     } on Failure catch (error) {
       throw Failure(message: error.message);

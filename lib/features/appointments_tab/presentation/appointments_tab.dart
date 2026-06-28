@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clinc_dashboard/core/theme/app_text_styles.dart';
 import 'package:clinc_dashboard/core/theme/color_manger.dart';
 import 'package:clinc_dashboard/features/dashboard_tab/presentation/cubit/dashboard_cubit.dart';
@@ -35,7 +37,7 @@ class _AppointmentsTabState extends State<AppointmentsTab> {
           current is AppointmentStatusUpdated,
       listener: (context, state) {
         if (state is AppointmentStatusUpdateError) {
-          UiUtils.showSnackBar(context, state.message);
+          UiUtils.showSnackBar(context, "Some Thing Went Wrong, try later");
         } else if (state is AppointmentStatusUpdated) {
           UiUtils.showSnackBar(context, 'appointment_status_updated'.tr());
         }
@@ -67,6 +69,7 @@ class _AppointmentsTabState extends State<AppointmentsTab> {
                   Expanded(
                     child: FilterList(
                       onStatusSelected: (status) {
+                        log("status $status");
                         context.read<AppointmentCubit>().getAppointment(
                           status: status,
                           selectedDate: selectedDate,
